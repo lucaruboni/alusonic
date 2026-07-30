@@ -1,90 +1,52 @@
 <?php
 /**
- * Single Experience template
- * Mirrors the About page layout: page hero → story/content → gallery
+ * Single Artist (internal post type key: esperienza).
  */
 
 get_header();
 
-$pid         = get_the_ID();
-$hero_img    = get_the_post_thumbnail_url($pid, 'hero-bg');
-$gallery_ids = torresan_gallery_ids('exp_gallery', $pid);
-$duration    = get_post_meta($pid, 'exp_duration', true);
-$price       = get_post_meta($pid, 'exp_price', true);
-$max_guests  = get_post_meta($pid, 'exp_max_guests', true);
-$highlights  = get_post_meta($pid, 'exp_highlights', true);
+while (have_posts()) : the_post();
+    $pid   = get_the_ID();
+    $band  = torresan_field('artist_band', $pid);
+    $quote = torresan_field('artist_quote', $pid);
+    $model = torresan_field('artist_model', $pid);
+    $photo = get_the_post_thumbnail_url($pid, 'hero-bg');
+
+    $about = get_page_by_path('about') ?: get_page_by_path('chi-siamo');
+    $about_url = $about ? get_permalink($about->ID) : home_url('/');
 ?>
 
 <main>
-
-    <!-- ── Page Identification Hero ── -->
-    <section class="page-hero"<?php echo torresan_hero_style_attr($pid, 'exp_hero_mobile'); ?>>
-        <div class="page-hero-overlay"></div>
-        <div class="page-hero-content">
-            <p class="eyebrow"><?php esc_html_e('Experience', 'torresan-bnb'); ?></p>
-            <h1><?php the_title(); ?></h1>
-        </div>
+    <section class="container model-back">
+        <a href="<?php echo esc_url($about_url); ?>">&larr; <?php esc_html_e('Chi Siamo', 'torresan-bnb'); ?></a>
     </section>
 
-    <!-- ── Experience Details ── -->
-    <section class="section-content">
-        <div class="container">
-            <div class="experience-detail">
-                <div class="experience-body wysiwyg-content">
-                    <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-                        <?php the_content(); ?>
-                    <?php endwhile; endif; ?>
-                </div>
-
-                <?php if ($duration || $price || $max_guests || $highlights) : ?>
-                <aside class="camera-sidebar">
-                    <h3><?php esc_html_e('Details', 'torresan-bnb'); ?></h3>
-                    <?php if ($price) : ?>
-                        <p class="camera-price"><?php echo esc_html($price); ?></p>
-                    <?php endif; ?>
-                    <?php if ($duration) : ?>
-                        <p><strong><?php esc_html_e('Duration:', 'torresan-bnb'); ?></strong> <?php echo esc_html($duration); ?></p>
-                    <?php endif; ?>
-                    <?php if ($max_guests) : ?>
-                        <p><strong><?php esc_html_e('Max Guests:', 'torresan-bnb'); ?></strong> <?php echo esc_html($max_guests); ?></p>
-                    <?php endif; ?>
-                    <?php if ($highlights) : ?>
-                        <h4><?php esc_html_e('Highlights', 'torresan-bnb'); ?></h4>
-                        <ul class="camera-features">
-                            <?php foreach (array_filter(array_map('trim', explode("\n", $highlights))) as $hl) : ?>
-                                <li><?php echo esc_html($hl); ?></li>
-                            <?php endforeach; ?>
-                        </ul>
-                    <?php endif; ?>
-                    <a href="<?php echo esc_url(home_url('/contact')); ?>" class="btn" style="margin-top:1.5rem"><?php esc_html_e('Book This Experience', 'torresan-bnb'); ?></a>
-                </aside>
+    <section class="section">
+        <div class="container split-2">
+            <?php if ($photo) : ?>
+            <div class="split-media"><img src="<?php echo esc_url($photo); ?>" alt="<?php the_title_attribute(); ?>" loading="lazy" style="height:480px;object-fit:cover"></div>
+            <?php endif; ?>
+            <div class="split-body">
+                <?php if ($band) : ?><p class="eyebrow"><?php echo esc_html($band); ?></p><?php endif; ?>
+                <h1 style="font-size:clamp(34px,4vw,58px);margin-bottom:20px"><?php the_title(); ?></h1>
+                <?php if ($quote) : ?><p style="font-size:18px;color:var(--accent);font-style:italic;margin-bottom:24px">“<?php echo esc_html($quote); ?>”</p><?php endif; ?>
+                <div class="wysiwyg-content"><?php the_content(); ?></div>
+                <?php if ($model) : ?>
+                    <p style="margin-top:24px"><strong style="color:#fff"><?php esc_html_e('Suona:', 'torresan-bnb'); ?></strong> <?php echo esc_html($model); ?></p>
                 <?php endif; ?>
             </div>
         </div>
     </section>
 
-    <!-- ── Gallery ── -->
-    <?php if (! empty($gallery_ids)) : ?>
-    <section class="section-content alt">
+    <section class="cta-band section-alt">
         <div class="container">
-            <h2 style="text-align:center;margin-bottom:2rem"><?php esc_html_e('Gallery', 'torresan-bnb'); ?></h2>
-            <div class="camera-gallery" data-lightbox-group="exp-gallery-<?php echo $pid; ?>">
-                <?php foreach ($gallery_ids as $i => $img_id) :
-                    $url_t = wp_get_attachment_image_url($img_id, $i === 0 ? 'large' : 'section-card');
-                    $url_f = wp_get_attachment_image_url($img_id, 'large');
-                    $alt   = get_post_meta($img_id, '_wp_attachment_image_alt', true);
-                    if (! $url_t) continue;
-                    $cls = ($i === 0) ? 'camera-gallery-item camera-gallery-featured' : 'camera-gallery-item';
-                ?>
-                    <div class="<?php echo $cls; ?>" data-lightbox="<?php echo esc_url($url_f ?: $url_t); ?>">
-                        <img src="<?php echo esc_url($url_t); ?>" alt="<?php echo esc_attr($alt); ?>" loading="lazy">
-                    </div>
-                <?php endforeach; ?>
-            </div>
+            <h2><?php esc_html_e('Play Different', 'torresan-bnb'); ?></h2>
+            <p><?php esc_html_e('Scopri i modelli Alusonic e trova il tuo suono.', 'torresan-bnb'); ?></p>
+            <a class="btn btn-lg" href="<?php echo esc_url(get_permalink(get_page_by_path('models') ?: get_page_by_path('modelli'))); ?>"><?php esc_html_e('Scopri i Modelli', 'torresan-bnb'); ?></a>
         </div>
     </section>
-    <?php endif; ?>
-
 </main>
 
-<?php get_footer(); ?>
+<?php
+endwhile;
+get_footer();

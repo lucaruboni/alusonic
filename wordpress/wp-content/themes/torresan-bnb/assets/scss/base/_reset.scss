@@ -2,6 +2,17 @@
 //  Base reset & globals — Alusonic
 // ─────────────────────────────────────────────
 
+// Expose core tokens as CSS custom properties (for inline var() in templates)
+:root {
+    --bg:      #{$bg};
+    --bg-alt:  #{$bg-alt};
+    --ink:     #{$ink};
+    --muted:   #{$muted-2};
+    --muted-3: #{$muted-3};
+    --accent:  #{$accent};
+    --border:  #{$border};
+}
+
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
