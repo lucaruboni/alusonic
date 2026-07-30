@@ -1,0 +1,14 @@
+.env
+wordpress/*
+!wordpress/.htaccess
+!wordpress/wp-content/
+wordpress/wp-content/*
+!wordpress/wp-content/themes/
+wordpress/wp-content/themes/*
+!wordpress/wp-content/themes/torresan-bnb/
+!wordpress/wp-content/themes/torresan-bnb/**
+mysql/
+backups/
+node_modules/
+dist/
+.DS_Store

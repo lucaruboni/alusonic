@@ -1,0 +1,147 @@
+// ─────────────────────────────────────────────
+//  Hero — Alusonic
+// ─────────────────────────────────────────────
+
+// Homepage hero (split: text + foreground image, parallax bg)
+.hero {
+    position: relative;
+    min-height: 92vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+
+    @media (max-width: $bp-tablet) {
+        min-height: unset;
+        padding: 48px 0;
+    }
+}
+
+.hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+
+    img {
+        width: 100%;
+        height: 120%;
+        object-fit: cover;
+        opacity: 0.35;
+    }
+}
+
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(100deg,
+        oklch(13% 0.004 55) 20%,
+        oklch(13% 0.004 55 / 0.55) 55%,
+        oklch(13% 0.004 55 / 0.15) 100%);
+}
+
+.hero-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+
+    @media (max-width: $bp-tablet) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+    }
+}
+
+.hero-text {
+    flex: 1 1 420px;
+    min-width: 0;
+    max-width: 560px;
+
+    .eyebrow { letter-spacing: 4px; color: $accent-soft; margin-bottom: 20px; }
+
+    h1 {
+        font-family: $display;
+        font-weight: 700;
+        font-size: clamp(38px, 5vw, 84px);
+        line-height: 0.98;
+        color: $ink;
+        margin: 0 0 24px;
+        text-transform: uppercase;
+    }
+
+    .hero-subtitle {
+        font-size: 17px;
+        line-height: 1.6;
+        color: $muted;
+        margin: 0 0 36px;
+    }
+}
+
+.hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.hero-figure {
+    flex: 0 1 420px;
+    min-width: 180px;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        width: 100%;
+        height: auto;
+        max-height: 78vh;
+        object-fit: contain;
+        filter: drop-shadow(0 40px 60px oklch(0% 0 0 / 0.6));
+    }
+
+    @media (max-width: $bp-tablet) { width: 100%; }
+}
+
+// Inner page hero (About, Models, Contact, FAQ) — simpler centered band
+.page-hero {
+    position: relative;
+    padding: 120px 0 56px;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+
+    &.has-bg { padding: 140px 0 90px; }
+}
+
+.page-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, oklch(13% 0.004 55 / 0.7), oklch(13% 0.004 55 / 0.92));
+}
+
+.page-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 640px;
+    margin: 0 auto;
+
+    h1 {
+        font-family: $display;
+        font-weight: 700;
+        font-size: clamp(36px, 4.6vw, 64px);
+        color: $ink;
+        margin: 0 0 20px;
+        text-transform: uppercase;
+    }
+
+    .hero-subtitle {
+        font-size: 16px;
+        color: $muted-2;
+        margin: 0 auto;
+        max-width: 560px;
+    }
+
+    .btn { margin-top: 28px; }
+}

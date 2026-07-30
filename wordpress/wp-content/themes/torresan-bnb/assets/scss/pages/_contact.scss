@@ -1,0 +1,9 @@
+// ── Contact page ──
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    padding: 70px 0 110px;
+
+    @media (max-width: $bp-tablet) { grid-template-columns: 1fr; gap: 40px; }
+}

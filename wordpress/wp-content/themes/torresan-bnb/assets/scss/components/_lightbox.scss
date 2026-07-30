@@ -1,0 +1,49 @@
+// ─────────────────────────────────────────────
+//  Lightbox — Alusonic
+// ─────────────────────────────────────────────
+
+.lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: oklch(8% 0.004 55 / 0.94);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity $tr-base, visibility $tr-base;
+
+    &.is-open { opacity: 1; visibility: visible; }
+
+    img {
+        max-width: 92vw;
+        max-height: 88vh;
+        object-fit: contain;
+    }
+}
+.lightbox-close {
+    position: absolute;
+    top: 24px; right: 32px;
+    font-size: 32px;
+    color: $ink;
+    background: none;
+    border: none;
+    cursor: pointer;
+    line-height: 1;
+}
+.lightbox-prev,
+.lightbox-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40px;
+    color: $ink;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 12px;
+    &:hover { color: $accent; }
+}
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }

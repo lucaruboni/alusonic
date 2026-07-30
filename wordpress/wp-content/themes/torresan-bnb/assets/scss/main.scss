@@ -1,0 +1,29 @@
+// ═══════════════════════════════════════════════════════════
+//  Alusonic — Main SCSS Entry Point
+//  Compiled → assets/dist/main.min.css  (via Gulp)
+// ═══════════════════════════════════════════════════════════
+
+// ── Base ──
+@import 'base/variables';
+@import 'base/reset';
+
+// ── Layout ──
+@import 'layout/header';
+@import 'layout/footer';
+
+// ── Components ──
+@import 'components/buttons';
+@import 'components/hero';
+@import 'components/sections';
+@import 'components/cards';
+@import 'components/forms';
+@import 'components/faq';
+@import 'components/galleries';
+@import 'components/carousel';
+@import 'components/lightbox';
+
+// ── Pages ──
+@import 'pages/models';
+@import 'pages/single-model';
+@import 'pages/about';
+@import 'pages/contact';

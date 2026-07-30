@@ -1,0 +1,45 @@
+// ─────────────────────────────────────────────
+//  FAQ accordion — Alusonic
+// ─────────────────────────────────────────────
+
+.section-faq { padding: 100px 0; }
+
+.faq-item {
+    border-bottom: 1px solid $border;
+}
+
+.faq-trigger {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 24px 0;
+    text-align: left;
+    font-family: $display;
+    font-weight: 500;
+    font-size: 18px;
+    color: $ink;
+    text-transform: uppercase;
+
+    .faq-icon {
+        font-family: $sans;
+        font-size: 22px;
+        color: $accent;
+        flex: none;
+        transition: transform $tr-base;
+    }
+    &.is-open .faq-icon { transform: rotate(45deg); }
+}
+
+.faq-content {
+    display: none;
+    color: $muted-2;
+    font-size: 15px;
+    line-height: 1.7;
+
+    p { padding-bottom: 24px; margin: 0; }
+}

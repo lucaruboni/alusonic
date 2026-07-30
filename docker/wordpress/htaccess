@@ -1,0 +1,48 @@
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+# END WordPress
+
+# ── Block information-disclosure files (OWASP A05) ──────────────────────────
+<FilesMatch "(?i)^(readme\.html|license\.txt|wp-config-sample\.php)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order deny,allow
+        Deny from all
+    </IfModule>
+</FilesMatch>
+# ── Block XML-RPC — DDoS amplification / brute-force vector (OWASP A01) ─────────────────
+<Files "xmlrpc.php">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order deny,allow
+        Deny from all
+    </IfModule>
+</Files>
+# ── Block hidden/dot files, keep .well-known for ACME (OWASP A05) ───────────
+<IfModule mod_rewrite.c>
+    RewriteCond %{REQUEST_URI} !^/\.well-known/
+    RewriteRule (^|/)\.(?!well-known) - [F,L]
+</IfModule>
+
+# ── Block ?author= username enumeration (OWASP A01) ─────────────────────────
+<IfModule mod_rewrite.c>
+    RewriteCond %{QUERY_STRING} (^|&)author=[0-9] [NC]
+    RewriteRule .* - [F,L]
+</IfModule>
+
+# ── Disable directory listings (OWASP A05) ──────────────────────────────────
+Options -Indexes
+
+# ── Limit request body size — defense-in-depth (OWASP A04) ─────────────────
+LimitRequestBody 67108864

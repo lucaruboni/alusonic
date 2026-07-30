@@ -1,0 +1,84 @@
+// ─────────────────────────────────────────────
+//  Forms — Alusonic (dark)
+// ─────────────────────────────────────────────
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    background: $bg-card;
+    border: 1px solid $border;
+    border-radius: $radius;
+    padding: 40px;
+
+    @media (max-width: $bp-mobile) { padding: 26px; }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        @media (max-width: $bp-mobile) { grid-template-columns: 1fr; }
+    }
+
+    input,
+    select,
+    textarea {
+        width: 100%;
+        background: $bg;
+        border: 1px solid $border-input;
+        border-radius: $radius-sm;
+        padding: 14px 16px;
+        color: oklch(94% 0.004 55);
+        font-family: $sans;
+        font-size: 14px;
+        transition: border-color $tr-base;
+
+        &:focus { outline: none; border-color: $accent; }
+    }
+
+    textarea { resize: vertical; min-height: 140px; }
+
+    ::placeholder { color: $faint; }
+
+    button[type="submit"],
+    .btn { margin-top: 6px; border: none; }
+
+    .form-feedback {
+        font-size: 13px;
+        color: $accent;
+        min-height: 1em;
+    }
+    .form-feedback.is-error { color: oklch(70% 0.15 25); }
+}
+
+// Contact info column
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    .contact-photo {
+        height: 280px;
+        border-radius: $radius;
+        overflow: hidden;
+        background: $bg-soft;
+        img { width: 100%; height: 100%; object-fit: cover; }
+    }
+
+    .contact-block-title {
+        font-family: $sans;
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: $ink;
+        margin-bottom: 12px;
+    }
+    .contact-block p,
+    .contact-block a {
+        font-size: 15px;
+        line-height: 1.7;
+        color: $muted-2;
+        text-decoration: none;
+    }
+    .contact-block a.is-accent { color: $accent-soft; &:hover { color: $accent-hover; } }
+}

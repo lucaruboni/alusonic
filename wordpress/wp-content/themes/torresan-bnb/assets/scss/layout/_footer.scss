@@ -1,0 +1,119 @@
+// ─────────────────────────────────────────────
+//  Footer — Alusonic
+// ─────────────────────────────────────────────
+
+.site-footer {
+    background: $bg-alt;
+    border-top: 1px solid $border;
+    padding-top: 64px;
+}
+
+.footer-inner {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 32px;
+    padding-bottom: 48px;
+
+    @media (max-width: $bp-tablet) {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px 24px;
+    }
+    @media (max-width: $bp-mobile) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.footer-brand {
+    .brand-name {
+        font-family: $display;
+        font-weight: 700;
+        font-size: 26px;
+        letter-spacing: 1px;
+        color: $ink;
+        text-transform: uppercase;
+    }
+    .brand-sub {
+        font-family: $sans;
+        font-size: 9px;
+        letter-spacing: 3px;
+        color: $accent-soft;
+        margin: 4px 0 18px;
+        text-transform: uppercase;
+    }
+    .footer-tagline {
+        font-size: 14px;
+        line-height: 1.6;
+        color: $muted-3;
+        max-width: 320px;
+        margin: 0;
+    }
+}
+
+.footer-col-title {
+    font-family: $sans;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: $ink;
+    margin-bottom: 16px;
+}
+
+.footer-menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    a {
+        font-size: 14px;
+        color: $muted-3;
+        text-decoration: none;
+        transition: color $tr-base;
+        &:hover { color: $ink; }
+    }
+}
+
+.footer-address {
+    font-size: 14px;
+    line-height: 1.7;
+    color: $muted-3;
+    margin: 0;
+}
+
+.footer-ig,
+.footer-email {
+    display: block;
+    font-size: 14px;
+    color: $accent-soft;
+    text-decoration: none;
+    margin-bottom: 8px;
+    transition: color $tr-base;
+    &:hover { color: $accent-hover; }
+}
+.footer-email { color: $muted-3; &:hover { color: $ink; } }
+
+.footer-bottom {
+    border-top: 1px solid $border-soft;
+    padding: 24px 0 32px;
+}
+
+.footer-bottom-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+
+    @media (max-width: $bp-tablet) {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+.footer-copy { font-size: 12px; color: $faint; }
+.footer-slogan { font-size: 12px; color: $faint; font-style: italic; }
+
+// Footer language switcher inherits generic lang-switcher styles
+.lang-switcher--footer { color: $muted-3; }

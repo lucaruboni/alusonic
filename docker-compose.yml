@@ -1,0 +1,82 @@
+services:
+  db:
+    image: mariadb:11.4
+    container_name: ${PROJECT_NAME}_db
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_DATABASE: ${WORDPRESS_DB_NAME}
+      MYSQL_USER: ${WORDPRESS_DB_USER}
+      MYSQL_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./mysql:/var/lib/mysql
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  wordpress:
+    build:
+      context: .
+      dockerfile: docker/wordpress/Dockerfile
+    container_name: ${PROJECT_NAME}_wp
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "${WORDPRESS_PORT}:80"
+    security_opt:
+      - no-new-privileges:true
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME}
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: ${WORDPRESS_TABLE_PREFIX}
+      WORDPRESS_AUTH_KEY: ${WORDPRESS_AUTH_KEY}
+      WORDPRESS_SECURE_AUTH_KEY: ${WORDPRESS_SECURE_AUTH_KEY}
+      WORDPRESS_LOGGED_IN_KEY: ${WORDPRESS_LOGGED_IN_KEY}
+      WORDPRESS_NONCE_KEY: ${WORDPRESS_NONCE_KEY}
+      WORDPRESS_AUTH_SALT: ${WORDPRESS_AUTH_SALT}
+      WORDPRESS_SECURE_AUTH_SALT: ${WORDPRESS_SECURE_AUTH_SALT}
+      WORDPRESS_LOGGED_IN_SALT: ${WORDPRESS_LOGGED_IN_SALT}
+      WORDPRESS_NONCE_SALT: ${WORDPRESS_NONCE_SALT}
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_HOME', '${WP_HOME}');
+        define('WP_SITEURL', '${WP_SITEURL}');
+        define('FS_METHOD', 'direct');
+        define('DISALLOW_FILE_EDIT', true);
+        define('DISALLOW_FILE_MODS', false);
+        define('WP_AUTO_UPDATE_CORE', 'minor');
+        define('AUTOSAVE_INTERVAL', 180);
+        define('EMPTY_TRASH_DAYS', 14);
+        define('WP_DEBUG_DISPLAY', false);
+        define('WP_POST_REVISIONS', 10);
+        if (isset($$_SERVER['HTTP_X_FORWARDED_PROTO']) && $$_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+          $$_SERVER['HTTPS'] = 'on';
+        }
+    volumes:
+      - ./wordpress:/var/www/html
+      - ./wordpress/wp-content/themes/torresan-bnb:/var/www/html/wp-content/themes/torresan-bnb
+
+  edge:
+    image: nginx:1.27-alpine
+    container_name: ${PROJECT_NAME}_edge
+    restart: unless-stopped
+    profiles: ["prod"]
+    depends_on:
+      - wordpress
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./docker/nginx/certs:/etc/nginx/certs:ro
+

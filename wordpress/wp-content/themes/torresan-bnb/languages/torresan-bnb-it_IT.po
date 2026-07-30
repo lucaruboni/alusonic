@@ -1,0 +1,174 @@
+# Italian translation for Torresan BnB theme.
+# Copyright (C) 2026 Torre San Bartolo
+# This file is distributed under the same license as the torresan-bnb package.
+msgid ""
+msgstr ""
+"Project-Id-Version: torresan-bnb\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-05 00:00+0000\n"
+"PO-Revision-Date: 2026-05-05 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Italian\n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# Header / Nav
+msgid "Book"
+msgstr "Prenota"
+
+msgid "Open menu"
+msgstr "Apri il menu"
+
+msgid "Select language"
+msgstr "Seleziona la lingua"
+
+# Footer
+msgid "All rights reserved."
+msgstr "Tutti i diritti riservati."
+
+msgid "Legal"
+msgstr "Note legali"
+
+msgid "Privacy Policy"
+msgstr "Privacy Policy"
+
+msgid "Cookie Policy"
+msgstr "Cookie Policy"
+
+msgid "Terms of Service"
+msgstr "Termini di Servizio"
+
+# Carousel
+msgid "Previous slide"
+msgstr "Slide precedente"
+
+msgid "Next slide"
+msgstr "Slide successiva"
+
+msgid "Go to slide %d"
+msgstr "Vai alla slide %d"
+
+# Suite single
+msgid "Suite"
+msgstr "Suite"
+
+msgid "Up to %d guests"
+msgstr "Fino a %d ospiti"
+
+msgid "Guests:"
+msgstr "Ospiti:"
+
+msgid "Size:"
+msgstr "Dimensioni:"
+
+msgid "Bed:"
+msgstr "Letto:"
+
+msgid "Bathroom:"
+msgstr "Bagno:"
+
+msgid "Amenities"
+msgstr "Servizi"
+
+msgid "Book This Suite"
+msgstr "Prenota questa Suite"
+
+# Experience single
+msgid "Experience"
+msgstr "Esperienza"
+
+msgid "Details"
+msgstr "Dettagli"
+
+msgid "Duration:"
+msgstr "Durata:"
+
+msgid "Max Guests:"
+msgstr "Ospiti max:"
+
+msgid "Highlights"
+msgstr "In evidenza"
+
+msgid "Book This Experience"
+msgstr "Prenota questa Esperienza"
+
+msgid "Gallery"
+msgstr "Galleria"
+
+# Suites list page
+msgid "Accommodation"
+msgstr "Alloggio"
+
+msgid "guests"
+msgstr "ospiti"
+
+msgid "Discover →"
+msgstr "Scopri →"
+
+msgid "No suites available yet."
+msgstr "Nessuna suite disponibile al momento."
+
+# Experiences list page
+msgid "Explore"
+msgstr "Esplora"
+
+msgid "Up to %s guests"
+msgstr "Fino a %s ospiti"
+
+msgid "No experiences listed yet."
+msgstr "Nessuna esperienza disponibile al momento."
+
+# Contact page
+msgid "Get in Touch"
+msgstr "Contattaci"
+
+msgid "Address"
+msgstr "Indirizzo"
+
+msgid "Phone"
+msgstr "Telefono"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Hours"
+msgstr "Orari"
+
+msgid "Ready to reserve?"
+msgstr "Pronto a prenotare?"
+
+msgid "Book Online →"
+msgstr "Prenota Online →"
+
+msgid "Write to Us"
+msgstr "Scrivici"
+
+msgid "Send Us an Email"
+msgstr "Inviaci un'email"
+
+msgid "Click the button below — your mail client will open with our address already filled in. We reply within a few hours."
+msgstr "Clicca il pulsante qui sotto — il tuo client di posta si aprirà con il nostro indirizzo già inserito. Rispondiamo entro poche ore."
+
+msgid "Enquiry — Torre San Bartolo"
+msgstr "Richiesta — Torre San Bartolo"
+
+# Location page
+msgid "Open in Maps"
+msgstr "Apri in Maps"
+
+# Pool page
+msgid "Availability"
+msgstr "Disponibilità"
+
+msgid "Plan Your Stay"
+msgstr "Pianifica il tuo soggiorno"
+
+msgid "Book Now"
+msgstr "Prenota ora"
+
+# Gallery page
+msgid "Gallery coming soon."
+msgstr "Galleria in arrivo."

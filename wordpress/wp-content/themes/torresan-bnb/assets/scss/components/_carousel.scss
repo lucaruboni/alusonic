@@ -1,0 +1,42 @@
+// ─────────────────────────────────────────────
+//  Carousel — Alusonic (minimal, dark)
+// ─────────────────────────────────────────────
+
+.carousel { position: relative; overflow: hidden; border-radius: $radius; }
+.carousel-track { display: flex; transition: transform $tr-medium; }
+.carousel-slide {
+    flex: 0 0 100%;
+    img { width: 100%; height: 60vh; object-fit: cover; }
+}
+.carousel-prev,
+.carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: oklch(13% 0.004 55 / 0.6);
+    color: $ink;
+    border: 1px solid $border;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background $tr-base;
+    &:hover { background: $accent; color: $bg; }
+}
+.carousel-prev { left: 16px; }
+.carousel-next { right: 16px; }
+.carousel-dots {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    .dot {
+        width: 8px; height: 8px;
+        border-radius: 50%;
+        border: none;
+        background: oklch(80% 0.01 55 / 0.4);
+        cursor: pointer;
+        &.active { background: $accent; }
+    }
+}

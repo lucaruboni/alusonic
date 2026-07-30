@@ -1,0 +1,66 @@
+// ─────────────────────────────────────────────
+//  Alusonic — Design Tokens
+//  Dark premium theme, gold accent, Oswald type.
+//  Colour values mirror the original mockup (oklch).
+// ─────────────────────────────────────────────
+
+// Backgrounds
+$bg:            oklch(13% 0.004 55);   // page background (warm near-black)
+$bg-alt:        oklch(10% 0.004 55);   // darker alternating sections
+$bg-soft:       oklch(16% 0.006 55);   // cards / inputs surface
+$bg-card:       oklch(16% 0.006 55);
+
+// Text
+$ink:           oklch(96% 0.004 55);   // primary light text / headings
+$white-text:    oklch(96% 0.004 55);
+$muted:         oklch(72% 0.01 55);    // body copy on hero
+$muted-2:       oklch(65% 0.01 55);    // body copy
+$muted-3:       oklch(62% 0.01 55);    // captions / small
+$faint:         oklch(50% 0.01 55);    // footer fine print
+$nav-idle:      oklch(70% 0.01 55);    // idle nav links
+
+// Accent (gold / amber)
+$accent:        oklch(74% 0.13 82);
+$accent-hover:  oklch(80% 0.13 82);
+$accent-soft:   oklch(70% 0.12 82);    // eyebrows / small accents
+$accent-dark:   oklch(74% 0.13 82);
+
+// Borders
+$border:        oklch(30% 0.01 55 / 0.5);
+$border-soft:   oklch(30% 0.01 55 / 0.4);
+$border-input:  oklch(35% 0.01 55);
+$border-strong: oklch(40% 0.01 55);
+
+// Legacy aliases (kept so existing partials keep compiling)
+$white:        $ink;
+$cream:        $bg-soft;
+$cream-border: $border;
+$sand:         $accent;
+$sand-light:   $accent-soft;
+$dark:         $bg;
+$dark-warm:    $bg-alt;
+$accent-warm:  $accent;
+$ink-muted:    $muted-2;
+
+// Typography
+$display: 'Oswald', 'Arial Narrow', sans-serif;   // headings, brand
+$sans:    Helvetica, Arial, sans-serif;           // body
+$serif:   'Oswald', sans-serif;                    // legacy alias
+
+// Spacing
+$section-pad:  6rem;
+$container:    1320px;
+$narrow:       820px;
+
+// Breakpoints
+$bp-tablet: 900px;
+$bp-mobile: 480px;
+
+// Transitions
+$tr-base:   0.25s ease;
+$tr-slow:   0.6s ease;
+$tr-medium: 0.4s ease;
+
+// Radius
+$radius:    4px;
+$radius-sm: 2px;

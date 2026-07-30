@@ -1,0 +1,154 @@
+// ─────────────────────────────────────────────
+//  Header — Alusonic (sticky top bar)
+// ─────────────────────────────────────────────
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: oklch(13% 0.004 55 / 0.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid $border;
+    transition: background $tr-base;
+
+    &.scrolled { background: oklch(12% 0.004 55 / 0.96); }
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 14px 48px;
+
+    @media (max-width: $bp-tablet) { padding: 12px 20px; }
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    line-height: 1;
+    text-decoration: none;
+    flex: none;
+
+    .brand-logo { height: 40px; width: auto; display: block; }
+    .brand-text { display: flex; flex-direction: column; line-height: 1; }
+
+    .brand-name {
+        font-family: $display;
+        font-weight: 700;
+        font-size: 24px;
+        letter-spacing: 1px;
+        color: $ink;
+        text-transform: uppercase;
+    }
+
+    .brand-sub {
+        font-family: $sans;
+        font-size: 9px;
+        letter-spacing: 3px;
+        color: $accent-soft;
+        margin-top: 3px;
+        text-transform: uppercase;
+    }
+}
+
+.site-nav {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+
+    .menu-list {
+        display: flex;
+        align-items: center;
+        gap: 36px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .menu-list a {
+        font-family: $sans;
+        font-size: 13px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: $nav-idle;
+        text-decoration: none;
+        padding-bottom: 4px;
+        border-bottom: 2px solid transparent;
+        transition: color $tr-base, border-color $tr-base;
+    }
+
+    .menu-list a:hover,
+    .menu-list .current-menu-item > a,
+    .menu-list .current_page_item > a,
+    .menu-list .current-menu-parent > a {
+        color: $ink;
+        border-bottom-color: $accent;
+    }
+}
+
+.header-cta {
+    font-family: $sans;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: $bg;
+    background: $accent;
+    padding: 10px 20px;
+    border-radius: $radius-sm;
+    text-decoration: none;
+    transition: background $tr-base;
+
+    &:hover { background: $accent-hover; }
+}
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 110;
+
+    span {
+        display: block;
+        height: 2px;
+        width: 100%;
+        background: $ink;
+        transition: transform $tr-base, opacity $tr-base;
+    }
+
+    &.is-active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    &.is-active span:nth-child(2) { opacity: 0; }
+    &.is-active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+}
+
+@media (max-width: $bp-tablet) {
+    .menu-toggle { display: flex; }
+
+    .site-nav {
+        position: fixed;
+        inset: 0;
+        flex-direction: column;
+        justify-content: center;
+        gap: 28px;
+        background: oklch(11% 0.004 55 / 0.98);
+        backdrop-filter: blur(12px);
+        transform: translateX(100%);
+        transition: transform $tr-medium;
+
+        &.is-open { transform: translateX(0); }
+        .menu-list { flex-direction: column; gap: 24px; }
+        .menu-list a { font-size: 18px; }
+    }
+
+    .header-cta { font-size: 14px; padding: 14px 28px; }
+}
