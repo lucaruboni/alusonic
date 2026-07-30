@@ -90,7 +90,7 @@ echo "Media importati.\n";
 /* Logo in site settings */
 $settings = get_option('torresan_site_settings', []);
 if (! is_array($settings)) { $settings = []; }
-$settings['logo_image_id'] = $M['logo'];
+$settings['logo_image_id'] = $M['logofg']; // header uses the hero logo
 update_option('torresan_site_settings', $settings);
 
 /* ═══ 4. Wipe existing pages / models / artists / faq ═══ */
