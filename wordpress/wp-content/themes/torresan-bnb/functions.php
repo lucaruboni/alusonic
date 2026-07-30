@@ -1107,20 +1107,25 @@ function alusonic_render_model_card(int $post_id): void
     $cat   = torresan_field('model_category', $post_id);
     $lead  = torresan_field('model_lead', $post_id);
     $type  = alusonic_model_type($post_id);
-    $img   = get_the_post_thumbnail_url($post_id, 'section-card');
+    $thumb = get_post_thumbnail_id($post_id);
+    $img   = $thumb ? wp_get_attachment_image_url($thumb, 'large') : '';
     $title = get_the_title($post_id);
     ?>
     <a class="model-card" data-tilt data-type="<?php echo esc_attr($type); ?>" href="<?php echo esc_url(get_permalink($post_id)); ?>">
-        <div class="model-card-media">
+        <div class="mc-stage">
+            <div class="mc-bg"></div>
+            <div class="mc-frame"></div>
             <?php if ($img) : ?>
+            <div class="mc-subject">
                 <img src="<?php echo esc_url($img); ?>" alt="<?php echo esc_attr($title); ?>" loading="lazy">
+            </div>
             <?php endif; ?>
-        </div>
-        <div class="model-card-body">
-            <?php if ($cat) : ?><div class="model-card-cat"><?php echo esc_html($cat); ?></div><?php endif; ?>
-            <div class="model-card-name"><?php echo esc_html($title); ?></div>
-            <?php if ($lead) : ?><div class="model-card-desc"><?php echo esc_html(wp_trim_words($lead, 16)); ?></div><?php endif; ?>
-            <span class="model-card-more"><?php esc_html_e('Scopri', 'torresan-bnb'); ?> &rarr;</span>
+            <div class="mc-caption">
+                <?php if ($cat) : ?><div class="model-card-cat"><?php echo esc_html($cat); ?></div><?php endif; ?>
+                <div class="model-card-name"><?php echo esc_html($title); ?></div>
+                <?php if ($lead) : ?><div class="model-card-desc"><?php echo esc_html(wp_trim_words($lead, 14)); ?></div><?php endif; ?>
+                <span class="model-card-more"><?php esc_html_e('Scopri', 'torresan-bnb'); ?> &rarr;</span>
+            </div>
         </div>
     </a>
     <?php

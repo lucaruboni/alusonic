@@ -11,66 +11,133 @@
     @media (max-width: $bp-mobile) { grid-template-columns: 1fr; }
 }
 
+// ── Layered 3D model card (subject pops out of the gold frame on hover) ──
 .model-card {
     text-decoration: none;
     display: block;
-    background: $bg-card;
-    border: 1px solid $border;
+    perspective: 1100px;
+}
+
+.mc-stage {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    border-radius: $radius;
+    transform-style: preserve-3d;
+    transform: rotateX(0) rotateY(0);
+    transition: transform 0.18s ease-out, box-shadow $tr-base;
+    box-shadow: 0 24px 44px oklch(0% 0 0 / 0.45);
+}
+.model-card:hover .mc-stage {
+    box-shadow: 0 40px 70px oklch(0% 0 0 / 0.6);
+}
+
+// Background layer (dark spotlight — no photo needed for cut-out subjects)
+.mc-bg {
+    position: absolute;
+    inset: 0;
     border-radius: $radius;
     overflow: hidden;
-    transform: perspective(900px) rotateX(0) rotateY(0) scale(1);
-    transition: transform 0.15s ease-out, border-color $tr-base;
-    will-change: transform;
+    background:
+        radial-gradient(120% 90% at 50% 15%, oklch(24% 0.01 55) 0%, oklch(15% 0.006 55) 45%, oklch(11% 0.004 55) 100%);
+    transform: translateZ(0);
 
-    &:hover { border-color: oklch(45% 0.05 82 / 0.5); }
-
-    .model-card-media {
-        height: 340px;
-        position: relative;
-        overflow: hidden;
-        background: $bg-alt;
-
-        img { width: 100%; height: 100%; object-fit: contain; padding: 18px; }
+    &::after { // subtle vignette + bottom shade for caption legibility
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, transparent 45%, oklch(9% 0.004 55 / 0.85) 100%);
     }
+}
 
-    .model-card-body { padding: 24px 26px 28px; }
+// Gold frame (mid layer)
+.mc-frame {
+    position: absolute;
+    inset: 16px;
+    border: 1.5px solid $accent;
+    border-radius: 2px;
+    pointer-events: none;
+    transform: translateZ(30px);
+    transition: transform 0.18s ease-out;
+}
+.model-card:hover .mc-frame { transform: translateZ(45px); }
 
-    .model-card-cat {
-        font-family: $sans;
-        font-size: 11px;
-        letter-spacing: 2px;
-        color: $accent-soft;
-        text-transform: uppercase;
-        margin-bottom: 8px;
+// Subject (transparent instrument PNG) — pops forward and breaks the frame
+.mc-subject {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: visible;
+    transform: translateZ(55px);
+    transition: transform 0.18s ease-out;
+
+    img {
+        max-width: 84%;
+        max-height: 104%; // slightly overflows the frame top/bottom
+        object-fit: contain;
+        filter: drop-shadow(0 24px 26px oklch(0% 0 0 / 0.6));
     }
+}
+.model-card:hover .mc-subject {
+    transform: translateZ(90px) scale(1.05) translateY(-3%);
+}
 
-    .model-card-name {
-        font-family: $display;
-        font-weight: 600;
-        font-size: 24px;
-        color: $ink;
-        text-transform: uppercase;
-        line-height: 1.05;
-    }
+// Caption (front layer, bottom-left)
+.mc-caption {
+    position: absolute;
+    left: 26px;
+    right: 26px;
+    bottom: 24px;
+    z-index: 5;
+    transform: translateZ(70px);
+}
 
-    .model-card-desc {
-        font-size: 13px;
-        color: $muted-3;
-        margin-top: 8px;
-        line-height: 1.5;
-    }
+.model-card-cat {
+    font-family: $sans;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: $accent-soft;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+.model-card-name {
+    font-family: $display;
+    font-weight: 600;
+    font-size: 24px;
+    color: $ink;
+    text-transform: uppercase;
+    line-height: 1.05;
+}
+.model-card-desc {
+    font-size: 13px;
+    color: $muted;
+    margin-top: 8px;
+    line-height: 1.5;
+    max-width: 90%;
+}
+.model-card-more {
+    margin-top: 14px;
+    display: inline-block;
+    font-family: $sans;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: $ink;
+    border-bottom: 1px solid $accent;
+    padding-bottom: 2px;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity $tr-base, transform $tr-base;
+}
+.model-card:hover .model-card-more { opacity: 1; transform: translateY(0); }
 
-    .model-card-more {
-        margin-top: 16px;
-        display: inline-block;
-        font-family: $sans;
-        font-size: 12px;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        color: $ink;
-        border-bottom: 1px solid $accent;
-        padding-bottom: 2px;
-    }
+// Touch devices: no 3D, keep a clean static layout
+@media (hover: none) {
+    .mc-subject { transform: none; }
+    .mc-frame { transform: none; }
+    .mc-caption { transform: none; }
+    .model-card-more { opacity: 1; transform: none; }
 }
 
 // Category filter buttons (Models page)
