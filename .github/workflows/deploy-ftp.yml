@@ -1,0 +1,42 @@
+name: Deploy tema su Aruba (FTP)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "wordpress/wp-content/themes/torresan-bnb/**"
+  workflow_dispatch: {}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dipendenze
+        run: npm ci
+
+      - name: Build asset tema (CSS/JS minificati)
+        run: npm run build
+
+      - name: Deploy via FTP su Aruba
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.ARUBA_FTP_SERVER }}
+          username: ${{ secrets.ARUBA_FTP_USERNAME }}
+          password: ${{ secrets.ARUBA_FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: wordpress/wp-content/themes/torresan-bnb/
+          server-dir: ${{ secrets.ARUBA_FTP_REMOTE_DIR || '/wp-content/themes/torresan-bnb/' }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/*.map

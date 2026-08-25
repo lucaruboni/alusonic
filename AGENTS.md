@@ -13,8 +13,11 @@ Sito WordPress per BnB che affitta l'intera struttura, con UX premium e storytel
 
 ## Vincoli tecnici
 
-- Stack locale e server: Docker.
-- Deploy target: Oracle Cloud Always Free.
+- Stack locale: Docker (vedi `docker-compose.yml`).
+- Deploy produzione: hosting condiviso Aruba, niente Docker sul server. Solo il tema
+  (`wordpress/wp-content/themes/torresan-bnb`) viene pubblicato via FTP/FTPS
+  (workflow `.github/workflows/deploy-ftp.yml` o script `scripts/deploy/ftp-deploy.sh`);
+  WordPress core e DB restano quelli gia' installati su Aruba.
 - Tema custom senza copiare asset proprietari di terzi.
 
 ## Priorita agenti

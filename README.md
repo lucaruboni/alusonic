@@ -40,7 +40,49 @@ docker compose up -d --build
 - `.github/instructions/wordpress-bnb.instructions.md`: regole contestuali progetto
 - `AGENTS.md`: contesto operativo rapido per agenti
 
-## Oracle Always Free (linee guida)
+## Deploy su Aruba (hosting condiviso via FTP)
+
+Aruba hosting condiviso non supporta Docker: lo stack Docker resta solo per lo
+sviluppo locale. In produzione WordPress core e database sono quelli gia'
+installati sull'hosting Aruba (via cPanel/installer Aruba); da qui viene
+pubblicato via FTP/FTPS solo il tema custom
+`wordpress/wp-content/themes/torresan-bnb`, con gli asset gia' compilati.
+
+### Opzione A - automatico (GitHub Actions)
+
+1. Su GitHub, in `Settings > Secrets and variables > Actions`, crea i secret:
+   - `ARUBA_FTP_SERVER` (es. `ftp.tuodominio.it`)
+   - `ARUBA_FTP_USERNAME`
+   - `ARUBA_FTP_PASSWORD`
+   - `ARUBA_FTP_REMOTE_DIR` (opzionale, default `/wp-content/themes/torresan-bnb/`)
+2. Ad ogni push su `main` che tocca il tema, il workflow
+   `.github/workflows/deploy-ftp.yml` builda gli asset (`npm run build`) e
+   sincronizza la cartella del tema sull'hosting via FTPS.
+3. Puoi anche lanciarlo manualmente da tab "Actions" (`workflow_dispatch`).
+
+### Opzione B - manuale (script locale)
+
+Richiede `lftp` installato (`apt install lftp` / `brew install lftp`).
+
+1. Copia le variabili `ARUBA_FTP_*` in `.env` (vedi `.env.example`) con le
+   credenziali FTP fornite da Aruba.
+2. Esegui:
+
+```bash
+scripts/deploy/ftp-deploy.sh
+```
+
+Lo script builda gli asset e sincronizza (mirror con delete) il tema sul
+percorso remoto configurato.
+
+### Note
+
+- Le credenziali FTP non vanno mai committate: restano in `.env` (ignorato da
+  git) o nei Secrets di GitHub Actions.
+- Il deploy copre solo il tema. Plugin, `uploads/` e configurazione WordPress
+  restano gestiti direttamente sull'hosting Aruba.
+
+## Oracle Always Free (opzione alternativa con VPS/Cloud)
 
 1. Crea VM Ubuntu ARM (Ampere A1).
 2. Installa Docker e Docker Compose plugin.
