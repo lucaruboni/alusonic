@@ -1,0 +1,55 @@
+// ─────────────────────────────────────────────
+//  Preloader — full-screen splash shown while page assets
+//  (hero video included) finish loading.
+// ─────────────────────────────────────────────
+
+.site-preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    background: oklch(13% 0.004 55);
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+
+    &.is-hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+}
+
+.site-preloader-logo {
+    width: clamp(130px, 18vw, 200px);
+    max-width: 70vw;
+    height: auto;
+    animation: alu-preloader-pulse 1.6s ease-in-out infinite;
+}
+
+.site-preloader-bar {
+    width: 160px;
+    height: 2px;
+    border-radius: 2px;
+    background: oklch(96% 0.004 55 / 0.15);
+    overflow: hidden;
+}
+.site-preloader-fill {
+    width: 0%;
+    height: 100%;
+    background: oklch(70% 0.12 82);
+    transition: width 0.15s linear;
+}
+.site-preloader-pct {
+    font-family: $sans;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: oklch(70% 0.01 55);
+}
+
+@keyframes alu-preloader-pulse {
+    0%, 100% { opacity: 0.45; transform: scale(0.96); }
+    50%      { opacity: 1;    transform: scale(1); }
+}

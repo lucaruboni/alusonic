@@ -1,174 +1,344 @@
-# Italian translation for Torresan BnB theme.
-# Copyright (C) 2026 Torre San Bartolo
-# This file is distributed under the same license as the torresan-bnb package.
 msgid ""
 msgstr ""
-"Project-Id-Version: torresan-bnb\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-05 00:00+0000\n"
-"PO-Revision-Date: 2026-05-05 00:00+0000\n"
-"Last-Translator: \n"
-"Language-Team: Italian\n"
-"Language: it_IT\n"
+"Project-Id-Version: Alusonic\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: it_IT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-# Header / Nav
-msgid "Book"
-msgstr "Prenota"
+msgid "About Us"
+msgstr "Chi Siamo"
 
-msgid "Open menu"
-msgstr "Apri il menu"
+msgid "All"
+msgstr "Tutti"
 
-msgid "Select language"
-msgstr "Seleziona la lingua"
+msgid "All models"
+msgstr "Tutti i modelli"
 
-# Footer
-msgid "All rights reserved."
-msgstr "Tutti i diritti riservati."
+msgid "All videos on the YouTube channel"
+msgstr "Tutti i video sul canale YouTube"
 
-msgid "Legal"
-msgstr "Note legali"
+msgid "Alusonic is also distributed through selected dealers outside Italy."
+msgstr "Alusonic è distribuito anche attraverso rivenditori selezionati fuori dall'Italia."
 
-msgid "Privacy Policy"
-msgstr "Privacy Policy"
+msgid "Artist"
+msgstr "Artista"
 
-msgid "Cookie Policy"
-msgstr "Cookie Policy"
+msgid "Artists & Endorsements"
+msgstr "Artisti & Endorsement"
 
-msgid "Terms of Service"
-msgstr "Termini di Servizio"
+msgid "Back to Home"
+msgstr "Torna alla Home"
 
-# Carousel
-msgid "Previous slide"
-msgstr "Slide precedente"
+msgid "Bass"
+msgstr "Basso"
 
-msgid "Next slide"
-msgstr "Slide successiva"
+msgid "Basses"
+msgstr "Bassi"
 
-msgid "Go to slide %d"
-msgstr "Vai alla slide %d"
+msgid "Book a showroom visit, in Rimini or Carrara."
+msgstr "Prenota una visita in showroom, a Rimini o a Carrara."
 
-# Suite single
-msgid "Suite"
-msgstr "Suite"
+msgid "Book a trial in our showroom, or request a quote for a custom configuration."
+msgstr "Prenota una prova nel nostro showroom, o richiedi il preventivo per una configurazione custom."
 
-msgid "Up to %d guests"
-msgstr "Fino a %d ospiti"
+msgid "Book a visit"
+msgstr "Prenota una visita"
 
-msgid "Guests:"
-msgstr "Ospiti:"
+msgid "Catalogue"
+msgstr "Catalogo"
 
-msgid "Size:"
-msgstr "Dimensioni:"
+msgid "Choose / Change logo"
+msgstr "Scegli / Cambia logo"
 
-msgid "Bed:"
-msgstr "Letto:"
+msgid "Choose / Change video"
+msgstr "Scegli / Cambia video"
 
-msgid "Bathroom:"
-msgstr "Bagno:"
+msgid "Clear filters"
+msgstr "Azzera filtri"
 
-msgid "Amenities"
-msgstr "Servizi"
+msgid "Close"
+msgstr "Chiudi"
 
-msgid "Book This Suite"
-msgstr "Prenota questa Suite"
+msgid "Come and meet us"
+msgstr "Vieni a conoscerci"
 
-# Experience single
-msgid "Experience"
-msgstr "Esperienza"
+msgid "Construction details"
+msgstr "Dettagli costruttivi"
 
-msgid "Details"
-msgstr "Dettagli"
+msgid "Contact"
+msgstr "Contatti"
 
-msgid "Duration:"
-msgstr "Durata:"
+msgid "Copies from the English version of every Page, Suite, Experience and FAQ into the corresponding existing translations ONLY the non-textual parts: featured image, galleries, background images, maps, URLs, phone/email, prices, dimensions, guest count, post order and the relationships (page FAQs, home experience order). Relationship IDs are translated, so each page points to content in the right language."
+msgstr "Copia dalla versione inglese di ogni Pagina, Suite, Esperienza e FAQ verso le rispettive traduzioni già esistenti nelle altre lingue SOLO le parti non testuali: immagine in evidenza, gallerie, immagini di sfondo, mappe, URL, telefono/email, prezzi, dimensioni, numero ospiti, ordine dei post e i collegamenti (FAQ della pagina, ordine delle esperienze in home). Gli ID dei collegamenti vengono tradotti, così ogni pagina punta ai contenuti nella lingua giusta."
 
-msgid "Max Guests:"
-msgstr "Ospiti max:"
+msgid "Custom model"
+msgstr "Modello Custom"
 
-msgid "Highlights"
-msgstr "In evidenza"
+msgid "Direct contact"
+msgstr "Contatto diretto"
 
-msgid "Book This Experience"
-msgstr "Prenota questa Esperienza"
+msgid "Discover"
+msgstr "Scopri"
+
+msgid "Every detail"
+msgstr "Ogni dettaglio"
+
+msgid "Explore the Alusonic models and find your sound."
+msgstr "Scopri i modelli Alusonic e trova il tuo suono."
+
+msgid "Explore the Models"
+msgstr "Scopri i Modelli"
+
+msgid "Featured models"
+msgstr "Modelli in evidenza"
+
+msgid "Filters"
+msgstr "Filtri"
+
+msgid "Find out more"
+msgstr "Scopri di più"
+
+msgid "Follow us"
+msgstr "Seguici"
+
+msgid "Footer Menu"
+msgstr "Menu Footer"
+
+msgid "From our Instagram"
+msgstr "Dal nostro Instagram"
+
+msgid "Full name"
+msgstr "Nome e cognome"
+
+msgid "Full technical specification"
+msgstr "Tutte le specifiche tecniche"
 
 msgid "Gallery"
 msgstr "Galleria"
 
-# Suites list page
-msgid "Accommodation"
-msgstr "Alloggio"
-
-msgid "guests"
-msgstr "ospiti"
-
-msgid "Discover →"
-msgstr "Scopri →"
-
-msgid "No suites available yet."
-msgstr "Nessuna suite disponibile al momento."
-
-# Experiences list page
-msgid "Explore"
-msgstr "Esplora"
-
-msgid "Up to %s guests"
-msgstr "Fino a %s ospiti"
-
-msgid "No experiences listed yet."
-msgstr "Nessuna esperienza disponibile al momento."
-
-# Contact page
-msgid "Get in Touch"
+msgid "Get in touch"
 msgstr "Contattaci"
 
-msgid "Address"
-msgstr "Indirizzo"
+msgid "Global settings shown on every page (footer, branding)."
+msgstr "Impostazioni globali visibili su tutte le pagine (footer, branding)."
 
-msgid "Phone"
-msgstr "Telefono"
+msgid "Go to Contact"
+msgstr "Vai ai Contatti"
 
-msgid "Email"
-msgstr "Email"
+msgid "Guitar"
+msgstr "Chitarra"
 
-msgid "Hours"
-msgstr "Orari"
+msgid "Guitars"
+msgstr "Chitarre"
 
-msgid "Ready to reserve?"
-msgstr "Pronto a prenotare?"
+msgid "How can we help?"
+msgstr "Come possiamo aiutarti?"
 
-msgid "Book Online →"
-msgstr "Prenota Online →"
+msgid "If a translation does not exist yet it is skipped and reported below (create it manually by linking it from the Polylang edit screen)."
+msgstr "Se una traduzione non esiste ancora, viene saltata e segnalata sotto (va creata a mano collegandola dalla pagina di modifica in Polylang)."
 
-msgid "Write to Us"
-msgstr "Scrivici"
+msgid "If not set, the site name is shown instead."
+msgstr "Se non impostato, viene mostrato il nome del sito."
 
-msgid "Send Us an Email"
-msgstr "Inviaci un'email"
+msgid "Interest…"
+msgstr "Interesse…"
 
-msgid "Click the button below — your mail client will open with our address already filled in. We reply within a few hours."
-msgstr "Clicca il pulsante qui sotto — il tuo client di posta si aprirà con il nostro indirizzo già inserito. Rispondiamo entro poche ore."
+msgid "Italy"
+msgstr "Italia"
 
-msgid "Enquiry — Torre San Bartolo"
-msgstr "Richiesta — Torre San Bartolo"
+msgid "Let’s talk about a custom configuration or an artist collaboration."
+msgstr "Parliamo di una configurazione custom o di una collaborazione artistica."
 
-# Location page
-msgid "Open in Maps"
-msgstr "Apri in Maps"
+msgid "Let’s talk about your next instrument"
+msgstr "Parliamo del tuo prossimo strumento"
 
-# Pool page
-msgid "Availability"
-msgstr "Disponibilità"
+msgid "Line"
+msgstr "Linea"
 
-msgid "Plan Your Stay"
-msgstr "Pianifica il tuo soggiorno"
+msgid "Main Menu"
+msgstr "Menu Principale"
 
-msgid "Book Now"
-msgstr "Prenota ora"
+msgid "Main menu"
+msgstr "Menu principale"
 
-# Gallery page
-msgid "Gallery coming soon."
-msgstr "Galleria in arrivo."
+msgid "Materials & process"
+msgstr "Materiali & processo"
+
+msgid "Missing (create manually)"
+msgstr "Mancanti (da creare a mano)"
+
+msgid "Navigate"
+msgstr "Naviga"
+
+msgid "No artists published."
+msgstr "Nessun artista pubblicato."
+
+msgid "No models match your search."
+msgstr "Nessun modello corrisponde alla ricerca."
+
+msgid "No models published."
+msgstr "Nessun modello pubblicato."
+
+msgid "No photos available at the moment."
+msgstr "Nessuna foto disponibile al momento."
+
+msgid "No videos available at the moment."
+msgstr "Nessun video disponibile al momento."
+
+msgid "No videos selected."
+msgstr "Nessun video selezionato."
+
+msgid "Open menu"
+msgstr "Apri il menu"
+
+msgid "Original (EN)"
+msgstr "Originale (EN)"
+
+msgid "Other"
+msgstr "Altro"
+
+msgid "Our services"
+msgstr "I nostri servizi"
+
+msgid "Our showroom is open by appointment: come and try the models and talk about your bespoke instrument."
+msgstr "Il nostro showroom è aperto su appuntamento: vieni a provare i modelli e parlare del tuo strumento su misura."
+
+msgid "Our story"
+msgstr "La nostra storia"
+
+msgid "Page not found"
+msgstr "Pagina non trovata"
+
+msgid "Partner dealers"
+msgstr "Rivenditori partner"
+
+msgid "Plays:"
+msgstr "Suona:"
+
+msgid "Put your instrument in professional hands"
+msgstr "Affida il tuo strumento a un professionista"
+
+msgid "Read more"
+msgstr "Leggi di più"
+
+msgid "Remove"
+msgstr "Rimuovi"
+
+msgid "Repairs"
+msgstr "Riparazioni"
+
+msgid "Request Info"
+msgstr "Richiedi Info"
+
+msgid "Request Information"
+msgstr "Richiedi Informazioni"
+
+msgid "Request a Custom Build"
+msgstr "Richiedi un Custom"
+
+msgid "Request a Quote"
+msgstr "Richiedi Preventivo"
+
+msgid "Request a quote, book a showroom trial, or write to us directly about a custom configuration."
+msgstr "Richiedi un preventivo, prenota una prova in showroom o scrivici direttamente per una configurazione custom."
+
+msgid "Result"
+msgstr "Risultato"
+
+msgid "Rimini · Head office"
+msgstr "Rimini · Sede"
+
+msgid "Save settings"
+msgstr "Salva impostazioni"
+
+msgid "Scroll to explore"
+msgstr "Scorri per esplorare"
+
+msgid "Search for a model"
+msgstr "Cerca un modello"
+
+msgid "Search for a model…"
+msgstr "Cerca un modello…"
+
+msgid "See all models"
+msgstr "Vedi tutti i modelli"
+
+msgid "Send Request"
+msgstr "Invia Richiesta"
+
+msgid "Setup, maintenance and repair for all makes of guitars, basses and amplifiers."
+msgstr "Setup, manutenzione e riparazione su tutte le marche di chitarre, bassi e amplificatori."
+
+msgid "Signature only"
+msgstr "Solo signature"
+
+msgid "Site Settings"
+msgstr "Impostazioni Sito BnB"
+
+msgid "Site logo"
+msgstr "Logo sito"
+
+msgid "Sync Media/Structure"
+msgstr "Sync Media/Struttura"
+
+msgid "Sync Media/Structure EN → Other Languages"
+msgstr "Sync Media/Struttura EN → Altre Lingue"
+
+msgid "Sync media and structure EN → other languages"
+msgstr "Sincronizza media e struttura EN → altre lingue"
+
+msgid "Synced"
+msgstr "Sincronizzate"
+
+msgid "Tell us what you are after: model, configuration, timescale…"
+msgstr "Raccontaci cosa cerchi: modello, configurazione, tempistiche…"
+
+msgid "The Alusonic workshop"
+msgstr "Il laboratorio Alusonic"
+
+msgid "The collection"
+msgstr "La collezione"
+
+msgid "The page you are looking for does not exist or has been moved."
+msgstr "La pagina che cerchi non esiste o è stata spostata."
+
+msgid "Toggle light/dark theme"
+msgstr "Cambia tema chiaro/scuro"
+
+msgid "Translated text is NOT touched."
+msgstr "I testi tradotti NON vengono toccati."
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Video shown on the left of the full-screen menu (the floating hamburger icon that appears on scroll)."
+msgstr "Video mostrato a sinistra nel menu a schermo intero (icona hamburger flottante che appare scorrendo la pagina)."
+
+msgid "Visits by appointment: write to us to arrange a meeting at the showroom nearest to you."
+msgstr "Visite su appuntamento: scrivici per fissare un incontro nello showroom più vicino a te."
+
+msgid "Want to see an instrument in person?"
+msgstr "Vuoi vedere uno strumento dal vivo?"
+
+msgid "Want to try it in person?"
+msgstr "Vuoi provarlo dal vivo?"
+
+msgid "We look forward to seeing you"
+msgstr "Ti aspettiamo"
+
+msgid "Where instruments are born and reborn"
+msgstr "Dove nascono e rinascono gli strumenti"
+
+msgid "Who plays Alusonic"
+msgstr "Chi suona Alusonic"
+
+msgid "Worldwide"
+msgstr "Nel mondo"
+
+msgid "You can re-run this tool whenever the client changes photos or reorders the home experiences: the changes are propagated to every language without overwriting the translations."
+msgstr "Puoi rilanciare questo strumento ogni volta che il cliente cambia foto o riordina le esperienze in home: le modifiche vengono propagate a tutte le lingue senza sovrascrivere le traduzioni."
+
+msgid "Your instrument can carry a signature too"
+msgstr "Anche il tuo strumento può avere una firma"

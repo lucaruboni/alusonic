@@ -98,9 +98,41 @@ function initLightbox($) {
 
     function show(idx) {
         var d = images[idx];
+        $img.css({ width: '', height: '' });
         $img.attr({ src: d.src, alt: d.alt });
         $counter.text((idx + 1) + ' / ' + images.length);
+
+        if ($img[0].complete) { fit(); } else { $img.one('load', fit); }
     }
+
+    // Quanto si può ingrandire una foto oltre la sua dimensione reale prima
+    // che si veda sgranata. Gran parte dell'archivio sta sotto gli 800px:
+    // senza limite, a schermo pieno risulterebbe sfocata; senza ingrandimento
+    // affatto, resterebbe minuscola al centro dello schermo.
+    var MAX_UPSCALE = 2.2;
+
+    function fit() {
+        var el = $img[0];
+        if (!el || !el.naturalWidth) { return; }
+
+        var availW = $overlay.width() - 176;  // spazio lasciato alle frecce
+        var availH = $overlay.height() * 0.9;
+
+        var scale = Math.min(
+            availW / el.naturalWidth,
+            availH / el.naturalHeight,
+            MAX_UPSCALE
+        );
+
+        $img.css({
+            width:  Math.round(el.naturalWidth  * scale) + 'px',
+            height: Math.round(el.naturalHeight * scale) + 'px'
+        });
+    }
+
+    $(window).on('resize', function () {
+        if ($overlay && $overlay.hasClass('is-open')) { fit(); }
+    });
 
     build();
 

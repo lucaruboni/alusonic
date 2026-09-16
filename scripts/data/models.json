@@ -1,0 +1,300 @@
+{
+  "_comment": "Dati reali dei modelli Alusonic (fonte: alusonic-content-inventory.md). Guida sia il ritaglio foto (scripts/cutout/) sia il seed WordPress (scripts/seed-alusonic.php). Per aggiungere un nuovo strumento: aggiungete le foto in alusonic-assets/, una voce in scripts/cutout/models.json, rilanciate scripts/cutout/cutout.sh, poi aggiungete una voce qui con specs reali e rilanciate lo script di copia media + il seed.",
+  "models": [
+    {
+      "id": "django-supreme-carbon",
+      "type": "basso",
+      "title": "Django Supreme Carbon",
+      "category_label": "Basso · Django Custom Shop",
+      "lead": "Signature model sviluppato con Cass Lewis (Skunk Anansie): corpo in alluminio aeronautico con scocca in fibra di carbonio, per il basso più leggero e rifinito della linea Django.",
+      "specs": [["Corpo", "Alluminio aeronautico + scocca carbonio"], ["Manico", "Bolt-on, acero con barre in grafite"], ["Tastiera", "Graphitex, 24 tasti"], ["Pickup", "Alusonic \"Hybrid\" Alnico5/Neodimio"], ["Corde", "DR Red Devils 45-105"], ["Peso", "4 kg"]],
+      "detail_title": "La firma di Cass Lewis",
+      "detail_html": "<p>Ponte in alluminio autolubrificante quick-release, meccaniche Hipshot Ultralites, pickguard in fibra di carbonio. Ogni esemplare include hardcase ABS, certificato di autenticità e garanzia a vita.</p>"
+    },
+    {
+      "id": "django-supreme4",
+      "type": "basso",
+      "title": "Django Supreme 4",
+      "category_label": "Basso · Django Custom Shop",
+      "lead": "Corpo ricavato da un blocco unico di alluminio aeronautico, finitura a specchio: il basso 4 corde di punta della linea Django.",
+      "specs": [["Corpo", "Blocco unico di alluminio, finitura specchio"], ["Retro", "Alluminio (carbonio a richiesta)"], ["Tastiera", "Fibra di carbonio, 12\""], ["Pickup", "Alusonic \"Hybrid\" Alnico5/Neodimio"], ["Corde", "Alusonic Steel 45-135"], ["Peso", "3,9 kg"]],
+      "detail_title": "Scavato, non assemblato",
+      "detail_html": "<p>Manico avvitato in acero con barre in grafite, ponte in alluminio autolubrificante quick-release, meccaniche Hipshot Ultralites. Finiture e colori disponibili su richiesta.</p>"
+    },
+    {
+      "id": "django-supreme5",
+      "type": "basso",
+      "title": "Django Supreme 5",
+      "category_label": "Basso · Django Custom Shop",
+      "lead": "La versione 5 corde del Django Supreme: stessa costruzione in blocco unico di alluminio, tastiera più ampia per accordature estese.",
+      "specs": [["Corpo", "Blocco unico di alluminio, finitura specchio"], ["Retro", "Fibra di carbonio"], ["Tastiera", "Fibra di carbonio, 16\""], ["Corde", "Alusonic Steel 45-135"], ["String spacing", "18 mm"], ["Peso", "4,1 kg"]],
+      "detail_title": "Scavato, non assemblato",
+      "detail_html": "<p>Manico avvitato in acero con barre in grafite, ponte in alluminio autolubrificante quick-release, meccaniche Hipshot Ultralites.</p>"
+    },
+    {
+      "id": "django-marok",
+      "type": "basso",
+      "title": "Django Marok",
+      "category_label": "Basso · Django Hybrid",
+      "lead": "Tecnologia \"Hybrid\" brevettata: corpo in ontano camerato con top in alluminio, finitura nero opaco per un attacco caldo e definito.",
+      "specs": [["Corpo", "Ontano camerato + top alluminio"], ["Finitura", "Epoxy nero opaco"], ["Tastiera", "Graphitex, 7,25\""], ["Pickup", "Alnico5 split coil"], ["Corde", "D'Addario EXL 220"], ["Peso", "3,7 kg medio"]],
+      "detail_title": "Il meglio di legno e alluminio",
+      "detail_html": "<p>Controlli Volume (push-pull active/passive), Balance, Treble, Bass. Nut in ottone lucidato, meccaniche Hipshot Ultralites.</p>"
+    },
+    {
+      "id": "django-dc",
+      "type": "basso",
+      "title": "Django DC",
+      "category_label": "Basso · Django Hybrid",
+      "lead": "Corpo camerato con top in alluminio aeronautico anodizzato oro: un basso Hybrid dal carattere visivo unico.",
+      "specs": [["Corpo", "Camerato + top alluminio anodizzato oro"], ["Finitura", "Nero opaco epossidico"], ["Tastiera", "Graphitex, 12\""], ["Pickup", "Alusonic \"Hybrid\" Alnico5/Neodimio"], ["Corde", "Alusonic 45-105"], ["Peso", "3,8 kg"]],
+      "detail_title": "Un carattere unico",
+      "detail_html": "<p>Ponte in alluminio autolubrificante quick-release, meccaniche Hipshot Ultralites, hardware in alluminio.</p>"
+    },
+    {
+      "id": "django-deluxe4",
+      "type": "basso",
+      "title": "Django Deluxe 4",
+      "category_label": "Basso · Django Hybrid",
+      "lead": "Corpo camerato in ontano/frassino/sassofrasso con top in alluminio o carbonio: la versione Hybrid più versatile della linea Django.",
+      "specs": [["Corpo", "Camerato + top alluminio o carbonio"], ["Finitura top", "Specchio (su richiesta)"], ["Tastiera", "Graphitex, 12\""], ["Elettronica", "Preamp Alusonic attivo/passivo"], ["Corde", "Alusonic 45-105"], ["Peso", "3,7 kg medio"]],
+      "detail_title": "Costruzione Hybrid",
+      "detail_html": "<p>Manico in acero con barre in grafite, ponte in alluminio quick-release, meccaniche Hipshot Ultralites, hardcase incluso.</p>"
+    },
+    {
+      "id": "django-deluxe5",
+      "type": "basso",
+      "title": "Django Deluxe 5",
+      "category_label": "Basso · Django Hybrid",
+      "lead": "La versione 5 corde del Django Deluxe: tastiera più ampia e string spacing 18mm per chi cerca estensione e comfort.",
+      "specs": [["Corpo", "Camerato + top alluminio o carbonio"], ["Tastiera", "Graphitex, 16\""], ["String spacing", "18 mm"], ["Elettronica", "Preamp Alusonic attivo/passivo"], ["Corde", "Alusonic 45-135"], ["Peso", "3,9 kg medio"]],
+      "detail_title": "Costruzione Hybrid",
+      "detail_html": "<p>Manico in acero con barre in grafite, ponte in alluminio quick-release, meccaniche Hipshot Ultralites.</p>"
+    },
+    {
+      "id": "quadraflex4",
+      "type": "basso",
+      "title": "Quadraflex 4",
+      "category_label": "Basso · Django Hybrid",
+      "lead": "Il pickup esclusivo \"QuadraFleX\" Alnico5/Neodimio firma il carattere di questo basso Hybrid dal timbro estremamente versatile.",
+      "specs": [["Pickup", "Alusonic \"QuadraFleX\" Alnico5/Neodimio"], ["Corpo", "Camerato + top alluminio o carbonio"], ["Tastiera", "Graphitex, 12\""], ["Controlli", "Volume, Tone, selettore 5 vie"], ["Corde", "Alusonic 45-105"], ["Peso", "3,6 kg medio"]],
+      "detail_title": "Il pickup QuadraFleX",
+      "detail_html": "<p>Elettronica attiva disponibile su richiesta. Ponte in alluminio quick-release, meccaniche Hipshot Ultralites.</p>"
+    },
+    {
+      "id": "pentaflex",
+      "type": "basso",
+      "title": "Pentaflex",
+      "category_label": "Basso · Django Custom Shop",
+      "lead": "Bolt-on in alluminio aeronautico massiccio con pickup esclusivo \"PentaFleX\": potenza e definizione per il basso a 5 corde più diretto della gamma.",
+      "specs": [["Corpo", "Alluminio aeronautico massiccio"], ["Retro", "Fibra di carbonio"], ["Pickup", "Alusonic \"PentaFleX\" Alnico5/Neodimio"], ["Tastiera", "Fibra di carbonio, 16\""], ["Corde", "Alusonic 45-135"], ["Peso", "4,1 kg"]],
+      "detail_title": "Potenza e definizione",
+      "detail_html": "<p>Ponte in alluminio quick-release, meccaniche Hipshot Ultralites, pickguard in fibra di carbonio.</p>"
+    },
+    {
+      "id": "django-standard4",
+      "type": "basso",
+      "title": "Django Standard 4",
+      "category_label": "Basso · Django",
+      "lead": "Corpo in ontano o sassofrasso con manico satinato: l'ingresso alla gamma Django, senza compromessi sul suono Alusonic.",
+      "specs": [["Corpo", "Ontano o sassofrasso"], ["Manico", "Satinato acrilico trasparente"], ["Pickup", "Alnico5 humbucker + single coil"], ["Elettronica", "Preamp attivo Alusonic"], ["Corde", "Acciaio 45-105"], ["Peso", "3,4 kg medio"]],
+      "detail_title": "L'ingresso alla gamma Django",
+      "detail_html": "<p>Colori disponibili: Matte Black, Matte White o Clear Satin Acrylic. Gigbag incluso, garanzia 2 anni.</p>"
+    },
+    {
+      "id": "django-standard5",
+      "type": "basso",
+      "title": "Django Standard 5",
+      "category_label": "Basso · Django",
+      "lead": "La versione 5 corde del Django Standard, con tastiera 16\" per accordature estese.",
+      "specs": [["Corpo", "Ontano o sassofrasso"], ["Tastiera", "16\""], ["Pickup", "Alnico5 humbucker + single coil"], ["Elettronica", "Preamp attivo Alusonic"], ["Corde", "Acciaio 45-130"], ["Peso", "3,5 kg medio"]],
+      "detail_title": "L'ingresso alla gamma Django",
+      "detail_html": "<p>Colori disponibili: Matte Black, Matte White o Clear Satin Acrylic. Gigbag incluso, garanzia 2 anni.</p>"
+    },
+    {
+      "id": "django-basic4",
+      "type": "basso",
+      "title": "Django Basic 4",
+      "category_label": "Basso · Django",
+      "lead": "Corpo in frassino camerato con hardware Black/Chrome/Gold: il Django più accessibile, pensato per chi si avvicina al suono Alusonic.",
+      "specs": [["Corpo", "Frassino camerato"], ["Pickup", "Ferrite humbucker + single coil"], ["Ponte", "Ottone quick-release"], ["Pickguard", "Vinile 3 strati"], ["Corde", "Acciaio 45-105"], ["Peso", "3,8 kg medio"]],
+      "detail_title": "Il Django più accessibile",
+      "detail_html": "<p>Meccaniche open frame leggere. Gigbag incluso, garanzia 2 anni. Finitura Clear Satin Acrylic.</p>"
+    },
+    {
+      "id": "django-basic5",
+      "type": "basso",
+      "title": "Django Basic 5",
+      "category_label": "Basso · Django",
+      "lead": "La versione 5 corde del Django Basic, disponibile anche nelle varianti colore blue, black e natural.",
+      "specs": [["Corpo", "Frassino camerato"], ["Tastiera", "16\""], ["Pickup", "Ferrite humbucker + single coil"], ["Ponte", "Ottone quick-release"], ["Corde", "Acciaio 45-130"], ["Peso", "3,9 kg medio"]],
+      "detail_title": "Il Django più accessibile",
+      "detail_html": "<p>Varianti colore disponibili: blue, black, natural. Gigbag incluso, garanzia 2 anni.</p>"
+    },
+    {
+      "id": "django-standard5-cass-lewis",
+      "type": "basso",
+      "title": "Django Standard 5 “Cass Lewis”",
+      "category_label": "Basso · Django Signature",
+      "lead": "Signature model in legno sviluppato con Cass Lewis: preamp Class-A boutique e artwork esclusivo Skunk Anansie sul pickguard.",
+      "specs": [["Corpo", "Ontano, finitura nero opaco"], ["Tastiera", "Ebano/acero, 15\""], ["Pickup", "Alusonic \"Hybrid\" humbucker + split coil"], ["Elettronica", "Preamp Class-A boutique attivo"], ["Corde", "D'Addario 45-135"], ["Peso", "4,1 kg"]],
+      "detail_title": "La firma di Cass Lewis, in legno",
+      "detail_html": "<p>Pickguard con artwork Skunk Anansie. Softbag incluso, certificato di autenticità, garanzia 2 anni.</p>"
+    },
+
+    {
+      "id": "django-gtsh5",
+      "type": "basso",
+      "title": "Django GTS/H 5",
+      "category_label": "Basso · Django GTS/H Headless",
+      "lead": "Basso headless a 5 corde: ponte Riviera Gear RBBS, string spacing regolabile, per chi cerca compattezza senza compromessi.",
+      "specs": [["Corpo", "Camerato sassofrasso/frassino/ontano"], ["Top", "Carbonio o alluminio"], ["Tastiera", "16\""], ["Ponte", "Riviera Gear RBBS headless"], ["Corde", "Alusonic Tapered Steel 45-135"], ["Peso", "3,4 kg medio"]],
+      "detail_title": "Headless, senza compromessi",
+      "detail_html": "<p>Preamp Alusonic attivo/passivo, string spacing 18mm regolabile. Hardcase, garanzia a vita.</p>"
+    },
+    {
+      "id": "django-gtsh4",
+      "type": "basso",
+      "title": "Django GTS/H 4",
+      "category_label": "Basso · Django GTS/H Headless",
+      "lead": "La versione 4 corde del Django GTS/H headless, tastiera 12\" e string spacing 20mm.",
+      "specs": [["Corpo", "Camerato sassofrasso/frassino/ontano"], ["Top", "Carbonio o alluminio"], ["Tastiera", "12\""], ["Ponte", "Riviera Gear RBBS headless"], ["Corde", "Alusonic Tapered Steel 45-105"], ["Peso", "3,3 kg medio"]],
+      "detail_title": "Headless, senza compromessi",
+      "detail_html": "<p>Preamp Alusonic attivo/passivo. Hardcase, security straplock, garanzia a vita.</p>"
+    },
+    {
+      "id": "django-dxh5",
+      "type": "basso",
+      "title": "Django DX/H 5",
+      "category_label": "Basso · Django GTS/H Headless",
+      "lead": "Headless con top in alluminio o carbonio finitura specchio: la versione più raffinata della linea GTS/H.",
+      "specs": [["Top", "Alluminio o carbonio, finitura specchio"], ["Tastiera", "16\""], ["Ponte", "Riviera Gear RBBS headless"], ["String spacing", "18 mm regolabile"], ["Corde", "Tapered Steel 45-135"], ["Peso", "3,6 kg medio"]],
+      "detail_title": "Headless, senza compromessi",
+      "detail_html": "<p>Preamp Alusonic attivo/passivo, hardware alluminio nero opaco. Hardcase, garanzia a vita.</p>"
+    },
+
+    {
+      "id": "the-doom",
+      "type": "basso",
+      "title": "The Doom",
+      "category_label": "Basso · Signature",
+      "lead": "Scala doppia 36\"/34\" per accordature estese: costruito per bassisti metal e prog che cercano attacco immediato e definizione estrema.",
+      "specs": [["Scala", "36\" / 34\" (multiscala)"], ["Tastiera", "Graphitex, 16\""], ["Ponte", "Riviera Gear RBBS headless"], ["Pickup", "Ceramic/Steel dual coil"], ["Corde", "Alusonic Steel 65-135 BEAD"], ["Peso", "3,2 kg medio"]],
+      "detail_title": "Costruito per spingere",
+      "detail_html": "<p>Controlli Volume, Balance, Treble, Middle, Bass. Hardcase, security straplock, garanzia a vita.</p>"
+    },
+
+    {
+      "id": "pinkhage-bass",
+      "type": "basso",
+      "title": "Pinkhage Signature",
+      "category_label": "Basso · J-Special Signature",
+      "lead": "Signature model sviluppato con Pinkhage (bassista e content creator giapponese): top in alluminio flammato high-gloss e componenti tutti custom.",
+      "specs": [["Corpo", "Swamp ash camerato premium"], ["Top", "Alluminio flammato high-gloss"], ["Tastiera", "Rosewood, 16\""], ["Pickup", "Custom split coil by Delano"], ["Elettronica", "Preamp 3-band by AD Electronics"], ["Corde", "Custom Sansone Strings 42-125"]],
+      "detail_title": "Ogni dettaglio è custom",
+      "detail_html": "<p>Include strap Magrabò custom e finger ramp in plexiglass. Peso 3,9 kg. Hardcase, certificato di autenticità, garanzia a vita.</p>"
+    },
+    {
+      "id": "j-special-supreme4",
+      "type": "basso",
+      "title": "J-Special Supreme 4",
+      "category_label": "Basso · J-Special Custom Shop",
+      "lead": "Bolt-on in alluminio aeronautico massiccio, finitura a specchio: la reinterpretazione Alusonic del basso J-style più amato.",
+      "specs": [["Corpo", "Alluminio aeronautico massiccio"], ["Tastiera", "Graphitex, 12\""], ["Pickup", "Alusonic \"Hybrid\" Alnico5/Neodimio soapbar"], ["Ponte", "Alluminio quick-release"], ["Corde", "Sansone Steel 45-105"], ["Peso", "3,9 kg"]],
+      "detail_title": "Il J-style secondo Alusonic",
+      "detail_html": "<p>Meccaniche leggere (Hipshot Ultralites a richiesta), hardcase ABS, certificato di autenticità, garanzia a vita.</p>"
+    },
+    {
+      "id": "j-special-supreme5",
+      "type": "basso",
+      "title": "J-Special Supreme 5",
+      "category_label": "Basso · J-Special Custom Shop",
+      "lead": "La versione 5 corde del J-Special Supreme, tastiera 16\" per estensione e comfort.",
+      "specs": [["Corpo", "Alluminio aeronautico massiccio"], ["Tastiera", "Graphitex, 16\""], ["Pickup", "Alusonic \"Hybrid\" Alnico5/Neodimio soapbar"], ["Ponte", "Alluminio quick-release"], ["Corde", "Sansone Steel 45-135"], ["Peso", "4,1 kg"]],
+      "detail_title": "Il J-style secondo Alusonic",
+      "detail_html": "<p>Hardcase ABS, certificato di autenticità, garanzia a vita.</p>"
+    },
+    {
+      "id": "j-special-deluxe4",
+      "type": "basso",
+      "title": "J-Special Deluxe 4",
+      "category_label": "Basso · J-Special Hybrid",
+      "lead": "Corpo camerato in ontano/swamp ash con top in alluminio o carbonio: la versione Hybrid del J-Special.",
+      "specs": [["Corpo", "Camerato + top alluminio o carbonio"], ["Tastiera", "Graphitex, 12\""], ["Pickup", "Hybrid Alnico5/Neodimio soapbar"], ["Ponte", "Alluminio quick-release"], ["Corde", "Sansone Steel 45-105"], ["Peso", "3,8 kg"]],
+      "detail_title": "Costruzione Hybrid",
+      "detail_html": "<p>Gigbag incluso, certificato di autenticità, garanzia a vita.</p>"
+    },
+    {
+      "id": "j-special-deluxe5",
+      "type": "basso",
+      "title": "J-Special Deluxe 5",
+      "category_label": "Basso · J-Special Hybrid",
+      "lead": "La versione 5 corde del J-Special Deluxe, tastiera 16\".",
+      "specs": [["Corpo", "Camerato + top alluminio o carbonio"], ["Tastiera", "Graphitex, 16\""], ["Pickup", "Hybrid Alnico5/Neodimio soapbar"], ["Ponte", "Alluminio quick-release"], ["Corde", "Sansone Steel 45-135"], ["Peso", "4 kg"]],
+      "detail_title": "Costruzione Hybrid",
+      "detail_html": "<p>Gigbag incluso, certificato di autenticità, garanzia a vita.</p>"
+    },
+
+    {
+      "id": "t-specialp90",
+      "type": "chitarra",
+      "title": "T-Special/P90",
+      "category_label": "Chitarra · Custom Shop",
+      "lead": "Bolt-on in alluminio aeronautico massiccio con coppia di P-90: la chitarra che ha lanciato la linea Alusonic, scelta da Justin Lockey (Editors) e Ace (Skunk Anansie).",
+      "specs": [["Corpo", "Alluminio aeronautico massiccio"], ["Scala", "25-1/2\""], ["Pickup", "Alnico5 P-90 (single coil a richiesta)"], ["Ponte", "Hipshot Hardtail"], ["Corde", "Nickel 10-52"], ["Peso", "3,2 kg"]],
+      "detail_title": "La chitarra che ha iniziato tutto",
+      "detail_html": "<p>Meccaniche Gotoh, hardcase ABS, certificato di autenticità, garanzia a vita.</p>"
+    },
+    {
+      "id": "t90a",
+      "type": "chitarra",
+      "title": "Hybrid T90/A",
+      "category_label": "Chitarra · Hybrid",
+      "lead": "Corpo in ontano camerato con top in alluminio aeronautico: il twang classico con un'anima di metallo.",
+      "specs": [["Corpo", "Ontano camerato + top alluminio"], ["Pickup", "Alnico5 P-90 (single coil/humbucker a richiesta)"], ["Tastiera", "Graphitex, 9-1/2\""], ["Ponte", "Hipshot Hardtail"], ["Corde", "Nickel 10-52"], ["Peso", "3,2 kg"]],
+      "detail_title": "Twang con un'anima di metallo",
+      "detail_html": "<p>Gigbag incluso, certificato di autenticità, garanzia 2 anni.</p>"
+    },
+    {
+      "id": "t90s",
+      "type": "chitarra",
+      "title": "Hybrid T90/S",
+      "category_label": "Chitarra · Hybrid",
+      "lead": "Corpo in swamp ash camerato con top in alluminio: variante Hybrid dal timbro più aperto e risonante.",
+      "specs": [["Corpo", "Swamp ash camerato + top alluminio"], ["Nut", "Tusq"], ["Tastiera", "Maple/Graphitex/rosewood, 9-1/2\""], ["Ponte", "Hipshot Hardtail"], ["Corde", "Nickel 10-52"], ["Peso", "3,2 kg"]],
+      "detail_title": "Timbro aperto e risonante",
+      "detail_html": "<p>Gigbag incluso, certificato di autenticità, garanzia 2 anni.</p>"
+    },
+    {
+      "id": "t90skin",
+      "type": "chitarra",
+      "title": "Hybrid T90 “Skin”",
+      "category_label": "Chitarra · Signature",
+      "lead": "Signature model sviluppato con Skin (Skunk Anansie): finitura nero opaco totale, tastiera in ebano.",
+      "specs": [["Corpo", "Ontano + top alluminio, nero opaco"], ["Tastiera", "Ebano, 9-1/2\""], ["Pickup", "Alnico5 P-90"], ["Meccaniche", "Schaller"], ["Corde", "Nickel 10-52"], ["Peso", "3,2 kg"]],
+      "detail_title": "La firma di Skin",
+      "detail_html": "<p>Gigbag incluso, certificato di autenticità, garanzia 2 anni.</p>"
+    },
+    {
+      "id": "stratosonic",
+      "type": "chitarra",
+      "title": "StratOSonic",
+      "category_label": "Chitarra · Hybrid",
+      "lead": "Il classico single-cut reinterpretato in chiave Alusonic. Approfondimento e configuratore dedicati sul microsito StratOSonic.",
+      "specs": [["Costruzione", "Hybrid, top alluminio"], ["Riferimento", "Microsito dedicato stratosonic.alusonic.com"]],
+      "detail_title": "Un microsito tutto suo",
+      "detail_html": "<p>Per la scheda tecnica completa e le configurazioni disponibili, visita il microsito dedicato StratOSonic.</p>"
+    },
+
+    {
+      "id": "alu112-mk2",
+      "type": "cabinet",
+      "title": "ALU112 MK2",
+      "category_label": "Cabinet · 1x12\"",
+      "lead": "La cassa in alluminio più piccola e potente al mondo: hardshell in alluminio aeronautico, tromba di compressione custom, disponibile in tre livelli di potenza.",
+      "specs": [["Costruzione", "Hardshell alluminio aeronautico"], ["Speaker", "1x12\", woofer ferrite o neodimio"], ["Crossover", "2.5 kHz custom"], ["Potenza", "300–700W RMS (a seconda del modello)"], ["Connessioni", "2x Neutrik Speakon"], ["Dimensioni", "43 x 33 x 28 cm"]],
+      "detail_title": "Tre livelli di potenza",
+      "detail_html": "<p><strong>Limited Edition:</strong> 300W RMS (550W max), 98dB, 11kg, garanzia 2 anni.<br><strong>Ultra Light:</strong> 450W RMS (850W max), 99dB, 9,7kg, garanzia 2 anni.<br><strong>Top Performance:</strong> 700W RMS (1250W max), 101dB, 11kg, garanzia 3 anni.</p><p>Finitura epoxy-poliestere, colori custom su richiesta.</p>"
+    }
+  ]
+}

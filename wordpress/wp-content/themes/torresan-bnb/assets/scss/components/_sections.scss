@@ -116,6 +116,17 @@
     .btn { margin-top: 12px; }
 }
 
+// Section titles that link elsewhere (Chi Siamo, Modelli, Artisti,
+// Materiali, Instagram) keep the heading's own styling and just tint gold
+// on hover — no underline, no separate "link" look.
+.section-title-link {
+    color: inherit;
+    text-decoration: none;
+    transition: color $tr-base;
+    &:hover { color: $accent; }
+}
+.about-excerpt { font-size: 16px; line-height: 1.7; color: $muted-2; margin: 0; }
+
 // Process steps (About)
 .process-list {
     display: flex;

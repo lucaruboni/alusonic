@@ -7,7 +7,7 @@
 get_header();
 
 $pid       = get_the_ID();
-$eyebrow   = torresan_field('hero_eyebrow', $pid) ?: __('Contatti', 'torresan-bnb');
+$eyebrow   = torresan_field('hero_eyebrow', $pid) ?: __('Contact', 'torresan-bnb');
 $subtitle  = torresan_field('hero_subtitle', $pid);
 
 $email     = torresan_field('contatti_email', $pid);
@@ -22,6 +22,7 @@ $models = alusonic_model_ids();
 
 <main>
     <section class="page-hero">
+        <div class="page-hero-overlay"></div>
         <div class="page-hero-content">
             <?php if ($eyebrow) : ?><p class="eyebrow"><?php echo esc_html($eyebrow); ?></p><?php endif; ?>
             <h1><?php the_title(); ?></h1>
@@ -34,19 +35,19 @@ $models = alusonic_model_ids();
 
             <form id="torresan-contact-form" class="contact-form" novalidate>
                 <div class="form-row">
-                    <input type="text" name="contact_name" placeholder="<?php esc_attr_e('Nome e cognome', 'torresan-bnb'); ?>" required>
+                    <input type="text" name="contact_name" placeholder="<?php esc_attr_e('Full name', 'torresan-bnb'); ?>" required>
                     <input type="email" name="contact_email" placeholder="<?php esc_attr_e('Email', 'torresan-bnb'); ?>" required>
                 </div>
                 <select name="contact_interest">
-                    <option value=""><?php esc_html_e('Interesse…', 'torresan-bnb'); ?></option>
+                    <option value=""><?php esc_html_e('Interest…', 'torresan-bnb'); ?></option>
                     <?php foreach ($models as $mid) : ?>
                         <option value="<?php echo esc_attr(get_the_title($mid)); ?>"><?php echo esc_html(get_the_title($mid)); ?></option>
                     <?php endforeach; ?>
-                    <option value="<?php esc_attr_e('Modello Custom', 'torresan-bnb'); ?>"><?php esc_html_e('Modello Custom', 'torresan-bnb'); ?></option>
-                    <option value="<?php esc_attr_e('Altro', 'torresan-bnb'); ?>"><?php esc_html_e('Altro', 'torresan-bnb'); ?></option>
+                    <option value="<?php esc_attr_e('Custom model', 'torresan-bnb'); ?>"><?php esc_html_e('Custom model', 'torresan-bnb'); ?></option>
+                    <option value="<?php esc_attr_e('Other', 'torresan-bnb'); ?>"><?php esc_html_e('Other', 'torresan-bnb'); ?></option>
                 </select>
-                <textarea name="contact_message" rows="6" placeholder="<?php esc_attr_e('Raccontaci cosa cerchi: modello, configurazione, tempistiche…', 'torresan-bnb'); ?>" required></textarea>
-                <button type="submit" class="btn"><?php esc_html_e('Invia Richiesta', 'torresan-bnb'); ?></button>
+                <textarea name="contact_message" rows="6" placeholder="<?php esc_attr_e('Tell us what you are after: model, configuration, timescale…', 'torresan-bnb'); ?>" required></textarea>
+                <button type="submit" class="btn"><?php esc_html_e('Send Request', 'torresan-bnb'); ?></button>
                 <div id="form-status" class="form-feedback" role="status" aria-live="polite"></div>
             </form>
 
@@ -62,7 +63,7 @@ $models = alusonic_model_ids();
                 <?php endif; ?>
                 <?php if ($email) : ?>
                 <div class="contact-block">
-                    <div class="contact-block-title"><?php esc_html_e('Contatto diretto', 'torresan-bnb'); ?></div>
+                    <div class="contact-block-title"><?php esc_html_e('Direct contact', 'torresan-bnb'); ?></div>
                     <p><a href="mailto:<?php echo esc_attr($email); ?>"><?php echo esc_html($email); ?></a></p>
                     <?php if ($phone) : ?><p><a href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $phone)); ?>"><?php echo esc_html($phone); ?></a></p><?php endif; ?>
                 </div>

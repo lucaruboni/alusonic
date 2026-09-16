@@ -1,0 +1,57 @@
+// ─────────────────────────────────────────────
+//  Parallax gallery — full photo galleries (page-gallery, single model)
+//  Mouse/scroll parallax pan on the image, click opens the existing
+//  fullscreen lightbox ([data-lightbox]).
+// ─────────────────────────────────────────────
+
+.parallax-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+
+    @media (max-width: $bp-tablet) { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: $bp-mobile) { grid-template-columns: 1fr; }
+}
+
+.parallax-item {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: $radius-sm;
+    background: $bg-soft;
+    cursor: zoom-in;
+}
+
+.parallax-item-media {
+    position: absolute;
+    inset: -6% -6%;
+    width: 112%;
+    height: 112%;
+    object-fit: cover;
+    will-change: transform;
+    transition: transform 0.1s linear;
+}
+
+.parallax-item:hover .parallax-item-media { filter: brightness(1.06); }
+
+.parallax-item-caption {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 14px 16px;
+    background: linear-gradient(to top, oklch(0% 0 0 / 0.65), transparent);
+    color: $ink;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity $tr-base, transform $tr-base;
+    pointer-events: none;
+}
+.parallax-item:hover .parallax-item-caption {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .parallax-item-media { transition: none; }
+}

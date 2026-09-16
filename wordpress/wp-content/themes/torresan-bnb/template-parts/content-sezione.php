@@ -20,7 +20,7 @@ $sfondo  = torresan_field('sezione_sfondo', $sid) ?: 'chiaro';
 $img_url = torresan_image_url('sezione_immagine', 'section-card', $sid);
 $gallery = torresan_gallery_ids('sezione_galleria', $sid);
 $cta_txt = torresan_field('sezione_cta_testo', $sid);
-$cta_url = torresan_field('sezione_cta_url', $sid);
+$cta_url = torresan_localize_url(torresan_field('sezione_cta_url', $sid));
 
 $bg_class = 'sezione-bg-' . esc_attr($sfondo);
 ?>

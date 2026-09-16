@@ -8,6 +8,7 @@
 @import 'base/reset';
 
 // ── Layout ──
+@import 'layout/preloader';
 @import 'layout/header';
 @import 'layout/footer';
 
@@ -19,11 +20,20 @@
 @import 'components/forms';
 @import 'components/faq';
 @import 'components/galleries';
+@import 'components/parallax-gallery';
 @import 'components/carousel';
 @import 'components/lightbox';
+@import 'components/modal';
+@import 'components/floating-menu';
 
 // ── Pages ──
 @import 'pages/models';
 @import 'pages/single-model';
 @import 'pages/about';
 @import 'pages/contact';
+
+// ── Cursori e barra di scorrimento ──
+// Importato per ultimo di proposito: molti componenti dichiarano già
+// `cursor: pointer` e, a parità di specificità, vincerebbe l'ultima regola
+// della cascata. Stando in fondo, il cursore personalizzato prevale ovunque.
+@import 'base/cursor';

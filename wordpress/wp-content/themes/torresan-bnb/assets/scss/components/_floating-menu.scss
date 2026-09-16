@@ -1,0 +1,221 @@
+// ─────────────────────────────────────────────
+//  Floating scroll hamburger + full-screen mega menu
+// ─────────────────────────────────────────────
+
+// Counterpart of .floating-menu-toggle on the opposite corner: same fade-in
+// on scroll, so the two read as a pair. Sits BELOW .mega-menu (260) rather
+// than above it like the toggle — the open menu shows its own logo, so this
+// one should disappear behind it instead of doubling up.
+.floating-logo {
+    position: fixed;
+    top: 20px;
+    left: 24px;
+    z-index: 250;
+    display: block;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity $tr-base, visibility $tr-base, transform $tr-base;
+
+    &.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
+
+    // Hidden while the mega menu is open: the menu has its own logo.
+    &.is-hidden { opacity: 0; visibility: hidden; }
+
+    // Phones only have room for one floating control, and the hamburger wins.
+    @media (max-width: $bp-mobile) { display: none; }
+}
+
+.floating-logo-img {
+    display: block;
+    height: 42px;
+    width: auto;
+
+    // The logo file is white-on-transparent; on the light theme it would
+    // vanish against the page, so flip it there.
+    [data-theme="light"] & { filter: invert(1); }
+
+    @media (max-width: $bp-tablet) { height: 36px; }
+}
+
+.floating-menu-toggle {
+    position: fixed;
+    top: 20px;
+    right: 24px;
+    // Above .mega-menu (260): the button stays reachable while the menu is
+    // open because it doubles as the close control.
+    z-index: 270;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid oklch(100% 0 0 / 0.15);
+    background: oklch(11% 0.004 55 / 0.85);
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity $tr-base, visibility $tr-base, transform $tr-base;
+
+    &.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
+
+    // Stays clickable above the open mega menu — it doubles as the close
+    // control, morphing rather than being swapped for a separate ×.
+    &.is-open { opacity: 1; visibility: visible; transform: translateY(0); }
+
+    @media (max-width: $bp-tablet) { top: 14px; right: 14px; width: 42px; height: 42px; }
+}
+
+// Three-bar mark that folds into an arrow: the two half-width bars pivot on
+// their inner ends while the whole group rotates -45deg. Proportions follow
+// the original 50px/6px design, scaled to the 22px mark this button uses.
+.wrapper-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 22px;
+    height: 22px;
+    transition: transform 330ms ease-out;
+}
+
+.floating-menu-toggle.is-open .wrapper-menu { transform: rotate(-45deg); }
+
+.line-menu {
+    display: block;
+    width: 100%;
+    height: 2px;
+    border-radius: 2px;
+    background: oklch(96% 0.004 55);
+
+    &.half { width: 50%; }
+
+    &.start {
+        transform-origin: right;
+        transition: transform 330ms cubic-bezier(0.54, -0.81, 0.57, 0.57);
+    }
+
+    &.end {
+        align-self: flex-end;
+        transform-origin: left;
+        transition: transform 330ms cubic-bezier(0.54, -0.81, 0.57, 0.57);
+    }
+}
+
+.floating-menu-toggle.is-open .line-menu.start { transform: rotate(-90deg) translateX(1.3px); }
+.floating-menu-toggle.is-open .line-menu.end   { transform: rotate(-90deg) translateX(-1.3px); }
+
+@media (prefers-reduced-motion: reduce) {
+    .wrapper-menu,
+    .line-menu.start,
+    .line-menu.end { transition: none; }
+}
+
+.mega-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 260;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity $tr-medium, visibility $tr-medium;
+
+    &.is-open { visibility: visible; opacity: 1; }
+}
+
+
+.mega-menu-inner {
+    display: flex;
+    width: 100%;
+    height: 100%;
+
+    @media (max-width: $bp-tablet) { flex-direction: column; }
+}
+
+.mega-menu-media {
+    flex: 0 0 50%;
+    position: relative;
+    overflow: hidden;
+    background: oklch(9% 0.004 55);
+
+    video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, oklch(9% 0.004 55 / 0.3) 0%, oklch(9% 0.004 55 / 0.75) 100%);
+    }
+
+    .mega-menu-logo {
+        position: absolute;
+        z-index: 1;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: clamp(140px, 16vw, 220px);
+        height: auto;
+        filter: drop-shadow(0 4px 24px oklch(0% 0 0 / 0.6));
+    }
+
+    @media (max-width: $bp-tablet) { flex: 0 0 38%; }
+}
+
+.mega-menu-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 40px;
+    padding: 48px clamp(32px, 6vw, 96px);
+    background: oklch(11% 0.004 55);
+
+    nav { width: 100%; }
+}
+
+.mega-menu-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    a {
+        display: inline-block;
+        font-family: $display;
+        font-weight: 600;
+        font-size: clamp(28px, 4vw, 48px);
+        text-transform: uppercase;
+        color: oklch(80% 0.004 55);
+        text-decoration: none;
+        line-height: 1.25;
+        transition: color $tr-base;
+
+        &:hover { color: oklch(96% 0.004 55); }
+    }
+
+    .current-menu-item > a,
+    .current_page_item > a,
+    .current-menu-parent > a { color: oklch(70% 0.12 82); }
+}
+
+// .mega-menu-panel is always dark regardless of site theme (same reasoning
+// as the header), so its icon row needs fixed-light colors too rather than
+// following $nav-idle/$border-strong.
+.mega-menu-social a {
+    border-color: oklch(100% 0 0 / 0.15);
+    color: oklch(80% 0.004 55);
+
+    &:hover { background: oklch(70% 0.12 82); border-color: oklch(70% 0.12 82); color: oklch(13% 0.004 55); }
+}

@@ -1,0 +1,154 @@
+{
+  "_comment": "Elenco dei modelli di strumenti da ritagliare (rimozione sfondo). Ogni voce punta alla foto 'hero' del modello dentro alusonic-assets/. Per aggiungere un nuovo strumento: scarica le sue foto in alusonic-assets/<categoria>/<modello>/ come per gli altri, aggiungi una voce qui con id, categoria e il file sorgente scelto come hero, poi rilancia scripts/cutout/cutout.sh (o cutout.py). Lo script salta i modelli il cui output esiste già ed è più recente del sorgente, quindi è sicuro rilanciarlo ogni volta.",
+  "models": [
+    {
+      "id": "django-supreme-carbon",
+      "category": "django",
+      "source": "django/django-supreme-carbon/vertical.JPG"
+    },
+    {
+      "id": "django-supreme4",
+      "category": "django",
+      "source": "django/django-supreme4/vertical.JPG",
+      "manual": true
+    },
+    {
+      "id": "django-supreme5",
+      "category": "django",
+      "source": "django/django-supreme5/vertical.JPG"
+    },
+    {
+      "id": "django-marok",
+      "category": "django",
+      "source": "django/django-marok/interal.jpg"
+    },
+    {
+      "id": "django-dc",
+      "category": "django",
+      "source": "django/django-dc/10v.jpg"
+    },
+    {
+      "id": "django-deluxe4",
+      "category": "django",
+      "source": "django/django-deluxe4/vertical.JPG",
+      "manual": true
+    },
+    {
+      "id": "django-deluxe5",
+      "category": "django",
+      "source": "django/django-deluxe5/vertical.JPG",
+      "manual": true
+    },
+    {
+      "id": "quadraflex4",
+      "category": "django",
+      "source": "django/quadraflex4/vertical.jpg"
+    },
+    {
+      "id": "pentaflex",
+      "category": "django",
+      "source": "django/pentaflex/vertical.jpg",
+      "manual": true
+    },
+    {
+      "id": "django-standard4",
+      "category": "django",
+      "source": "django/django-standard4/vertical.jpg"
+    },
+    {
+      "id": "django-standard5",
+      "category": "django",
+      "source": "django/django-standard5/vertical.jpg"
+    },
+    {
+      "id": "django-basic4",
+      "category": "django",
+      "source": "django/django-basic4/vertical.jpg"
+    },
+    {
+      "id": "django-basic5",
+      "category": "django",
+      "source": "django/django-basic5/vertical.jpg"
+    },
+    {
+      "id": "django-standard5-cass-lewis",
+      "category": "django",
+      "source": "django/django-standard5-cass-lewis/12.jpg"
+    },
+    {
+      "id": "django-gtsh5",
+      "category": "django-gtsh",
+      "source": "django-gtsh/gtsh5/vertical.jpg"
+    },
+    {
+      "id": "django-gtsh4",
+      "category": "django-gtsh",
+      "source": "django-gtsh/gtsh4/vertical.jpg"
+    },
+    {
+      "id": "django-dxh5",
+      "category": "django-gtsh",
+      "source": "django-gtsh/dxh5/vertical.jpg"
+    },
+    {
+      "id": "the-doom",
+      "category": "thedoom",
+      "source": "thedoom/vertical-new.jpg"
+    },
+    {
+      "id": "pinkhage-bass",
+      "category": "jspecial",
+      "source": "jspecial/pinkhage-bass/vertical.jpg"
+    },
+    {
+      "id": "j-special-supreme4",
+      "category": "jspecial",
+      "source": "jspecial/j-special-supreme4/vertical.jpg"
+    },
+    {
+      "id": "j-special-supreme5",
+      "category": "jspecial",
+      "source": "jspecial/j-special-supreme5/vertical.jpg"
+    },
+    {
+      "id": "j-special-deluxe4",
+      "category": "jspecial",
+      "source": "jspecial/j-special-deluxe4/vertical.jpg"
+    },
+    {
+      "id": "j-special-deluxe5",
+      "category": "jspecial",
+      "source": "jspecial/j-special-deluxe5/vertical.jpg"
+    },
+    {
+      "id": "t-specialp90",
+      "category": "guitars",
+      "source": "guitars/t-specialp90/interav.jpg"
+    },
+    {
+      "id": "t90a",
+      "category": "guitars",
+      "source": "guitars/t90a/intera.jpg"
+    },
+    {
+      "id": "t90s",
+      "category": "guitars",
+      "source": "guitars/t90s/intera.jpg"
+    },
+    {
+      "id": "t90skin",
+      "category": "guitars",
+      "source": "guitars/t90skin/intera.JPG"
+    },
+    {
+      "id": "stratosonic",
+      "category": "guitars",
+      "source": "guitars/stratosonic/fullok.jpg"
+    },
+    {
+      "id": "alu112-mk2",
+      "category": "cabinets",
+      "source": "cabinets/112mk2.jpg"
+    }
+  ]
+}

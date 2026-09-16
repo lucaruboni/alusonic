@@ -1,35 +1,98 @@
 // ─────────────────────────────────────────────
 //  Alusonic — Design Tokens
-//  Dark premium theme, gold accent, Oswald type.
-//  Colour values mirror the original mockup (oklch).
+//  Premium theme, gold accent, Oswald type.
+//  Colours live in CSS custom properties so the site can switch between a
+//  dark theme (default) and a light theme at runtime — see _theme.scss.
+//  Values mirror the original dark mockup (oklch).
 // ─────────────────────────────────────────────
 
-// Backgrounds
-$bg:            oklch(13% 0.004 55);   // page background (warm near-black)
-$bg-alt:        oklch(10% 0.004 55);   // darker alternating sections
-$bg-soft:       oklch(16% 0.006 55);   // cards / inputs surface
-$bg-card:       oklch(16% 0.006 55);
+:root {
+    // Backgrounds
+    --c-bg:            oklch(13% 0.004 55);   // page background (warm near-black)
+    --c-bg-alt:        oklch(10% 0.004 55);   // darker alternating sections
+    --c-bg-soft:       oklch(16% 0.006 55);   // cards / inputs surface
+    --c-bg-card:       oklch(16% 0.006 55);
 
-// Text
-$ink:           oklch(96% 0.004 55);   // primary light text / headings
-$white-text:    oklch(96% 0.004 55);
-$muted:         oklch(72% 0.01 55);    // body copy on hero
-$muted-2:       oklch(65% 0.01 55);    // body copy
-$muted-3:       oklch(62% 0.01 55);    // captions / small
-$faint:         oklch(50% 0.01 55);    // footer fine print
-$nav-idle:      oklch(70% 0.01 55);    // idle nav links
+    // Text
+    --c-ink:           oklch(96% 0.004 55);   // primary light text / headings
+    --c-muted:         oklch(72% 0.01 55);    // body copy on hero
+    --c-muted-2:       oklch(65% 0.01 55);    // body copy
+    --c-muted-3:       oklch(62% 0.01 55);    // captions / small
+    --c-faint:         oklch(50% 0.01 55);    // footer fine print
+    --c-nav-idle:      oklch(70% 0.01 55);    // idle nav links
 
-// Accent (gold / amber)
-$accent:        oklch(74% 0.13 82);
-$accent-hover:  oklch(80% 0.13 82);
-$accent-soft:   oklch(70% 0.12 82);    // eyebrows / small accents
-$accent-dark:   oklch(74% 0.13 82);
+    // Accent (gold / amber) — stays constant across themes, it's the brand colour
+    --c-accent:        oklch(74% 0.13 82);
+    --c-accent-hover:  oklch(80% 0.13 82);
+    --c-accent-soft:   oklch(70% 0.12 82);    // eyebrows / small accents
 
-// Borders
-$border:        oklch(30% 0.01 55 / 0.5);
-$border-soft:   oklch(30% 0.01 55 / 0.4);
-$border-input:  oklch(35% 0.01 55);
-$border-strong: oklch(40% 0.01 55);
+    // Borders
+    --c-border:        oklch(30% 0.01 55 / 0.5);
+    --c-border-soft:   oklch(30% 0.01 55 / 0.4);
+    --c-border-input:  oklch(35% 0.01 55);
+    --c-border-strong: oklch(40% 0.01 55);
+
+    // Overlay / shadow blacks (kept dark in both themes — shadows should stay dark)
+    --c-shadow:        oklch(0% 0 0);
+    --c-scrim:         oklch(6% 0.004 55);
+}
+
+// Light theme — applied via [data-theme="light"] on <html> (see _theme.scss
+// for the JS-driven toggle + prefers-color-scheme default).
+[data-theme="light"] {
+    --c-bg:            oklch(98% 0.004 85);
+    --c-bg-alt:        oklch(95% 0.006 85);
+    --c-bg-soft:       oklch(93% 0.006 85);
+    --c-bg-card:       oklch(97% 0.005 85);
+
+    --c-ink:           oklch(18% 0.006 55);
+    --c-muted:         oklch(38% 0.01 55);
+    --c-muted-2:       oklch(42% 0.01 55);
+    --c-muted-3:       oklch(46% 0.01 55);
+    --c-faint:         oklch(55% 0.01 55);
+    --c-nav-idle:      oklch(38% 0.01 55);
+
+    --c-accent:        oklch(56% 0.15 75);
+    --c-accent-hover:  oklch(50% 0.15 75);
+    --c-accent-soft:   oklch(48% 0.14 75);
+
+    --c-border:        oklch(75% 0.01 55 / 0.6);
+    --c-border-soft:   oklch(78% 0.01 55 / 0.5);
+    --c-border-input:  oklch(70% 0.01 55);
+    --c-border-strong: oklch(60% 0.01 55);
+
+    --c-shadow:        oklch(0% 0 0);
+    --c-scrim:         oklch(90% 0.006 85);
+}
+
+// SCSS variables now just alias the CSS custom properties, so every existing
+// partial that uses $bg / $ink / etc keeps compiling unchanged, but the
+// colour it resolves to is theme-aware at runtime.
+$bg:            var(--c-bg);
+$bg-alt:        var(--c-bg-alt);
+$bg-soft:       var(--c-bg-soft);
+$bg-card:       var(--c-bg-card);
+
+$ink:           var(--c-ink);
+$white-text:    var(--c-ink);
+$muted:         var(--c-muted);
+$muted-2:       var(--c-muted-2);
+$muted-3:       var(--c-muted-3);
+$faint:         var(--c-faint);
+$nav-idle:      var(--c-nav-idle);
+
+// $accent / $accent-hover / $accent-dark drive every accent usage across the
+// site EXCEPT eyebrows, so they alias white ($ink) instead of the orange
+// custom property. $accent-soft stays orange — it's the eyebrow colour.
+$accent:        var(--c-ink);
+$accent-hover:  var(--c-ink);
+$accent-soft:   var(--c-accent-soft);
+$accent-dark:   var(--c-ink);
+
+$border:        var(--c-border);
+$border-soft:   var(--c-border-soft);
+$border-input:  var(--c-border-input);
+$border-strong: var(--c-border-strong);
 
 // Legacy aliases (kept so existing partials keep compiling)
 $white:        $ink;
@@ -43,9 +106,9 @@ $accent-warm:  $accent;
 $ink-muted:    $muted-2;
 
 // Typography
-$display: 'Oswald', 'Arial Narrow', sans-serif;   // headings, brand
-$sans:    Helvetica, Arial, sans-serif;           // body
-$serif:   'Oswald', sans-serif;                    // legacy alias
+$display: 'Orbitron', 'Arial Narrow', sans-serif;   // headings, brand
+$sans:    'Orbitron', Helvetica, Arial, sans-serif; // body
+$serif:   'Orbitron', sans-serif;                    // legacy alias
 
 // Spacing
 $section-pad:  6rem;
@@ -55,6 +118,13 @@ $narrow:       820px;
 // Breakpoints
 $bp-tablet: 900px;
 $bp-mobile: 480px;
+
+// Sticky header's own rendered height — .brand-logo height (52px) + its
+// .header-inner padding, one desktop, one tablet/mobile (smaller padding
+// there). Hero sections subtract this so 100vh doesn't overshoot by
+// exactly the header's height.
+$header-h:         81px; // 14px + 52px logo + 14px + 1px border
+$header-h-tablet:  77px; // 12px + 52px logo + 12px + 1px border
 
 // Transitions
 $tr-base:   0.25s ease;

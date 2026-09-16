@@ -38,4 +38,46 @@
     cursor: zoom-in;
     img { width: 100%; height: 100%; object-fit: cover; transition: transform $tr-slow; }
     &:hover img { transform: scale(1.05); }
+
+    // Wider tiles for source photos with a caption baked into the bottom of
+    // the image (e.g. repairs services) — 3:2 matches the source so nothing
+    // gets cropped off.
+    &.gallery-item--wide { aspect-ratio: 3 / 2; }
+}
+
+// Full-bleed banner photo (e.g. repairs page workshop shot)
+.repairs-jumbotron {
+    border-radius: $radius;
+    overflow: hidden;
+    aspect-ratio: 21 / 9;
+    margin: 0 0 10px;
+
+    img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+
+    @media (max-width: $bp-tablet) { aspect-ratio: 4 / 3; }
+}
+
+// Video page — embedded YouTube grid
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+
+    @media (max-width: $bp-tablet) { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: $bp-mobile) { grid-template-columns: 1fr; }
+}
+.video-embed {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: $radius-sm;
+    overflow: hidden;
+    background: $bg-soft;
+
+    iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+}
+.video-title {
+    margin-top: 10px;
+    font-size: 14px;
+    color: $muted-2;
+    line-height: 1.4;
 }

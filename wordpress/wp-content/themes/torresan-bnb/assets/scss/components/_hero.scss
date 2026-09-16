@@ -4,33 +4,21 @@
 
 // Homepage hero (split: text + foreground image, parallax bg)
 .hero {
+    // 100vh minus the sticky header's own height — the header sits in
+    // normal flow above this section, so a plain 100vh here always
+    // overshoots the viewport by exactly the header's height.
     position: relative;
-    min-height: 92vh;
+    min-height: calc(100vh - #{$header-h});
     overflow: hidden;
     display: flex;
     align-items: center;
 
+    // Below tablet the video becomes a full-bleed background (see
+    // .hero-video-wrap) instead of a side panel, so the text needs to move
+    // to the bottom, over it, rather than sharing a row/column with it.
     @media (max-width: $bp-tablet) {
-        min-height: unset;
-        padding: 48px 0;
-    }
-}
-
-.hero-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    will-change: transform;
-
-    img {
-        // Overscan so mouse/scroll parallax never reveals the edges
-        position: absolute;
-        top: -12%;
-        left: -6%;
-        width: 112%;
-        height: 128%;
-        object-fit: cover;
-        opacity: 0.35;
+        min-height: calc(100vh - #{$header-h-tablet});
+        display: block;
     }
 }
 
@@ -38,75 +26,188 @@
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(100deg,
-        oklch(13% 0.004 55) 20%,
-        oklch(13% 0.004 55 / 0.55) 55%,
-        oklch(13% 0.004 55 / 0.15) 100%);
+    background: oklch(13% 0.004 55);
+
+    // The full-bleed video is the background on mobile — this flat tint
+    // would just dim it uniformly, fighting the per-text backdrop below.
+    @media (max-width: $bp-tablet) { display: none; }
 }
 
 .hero-inner {
-    position: relative;
+    // Absolutely filling .hero (rather than relying on a percentage height,
+    // which flex items can't resolve against a min-height-only parent) is
+    // what lets .hero-video-wrap's height:100% below reach the full section.
+    position: absolute;
+    inset: 0;
     z-index: 2;
-    width: 100%;
     display: flex;
     align-items: center;
-    gap: 32px;
 
     @media (max-width: $bp-tablet) {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 24px;
+        align-items: flex-end;
+        padding: 0 20px 32px;
     }
 }
 
 .hero-text {
+    position: relative;
+    z-index: 2;
     flex: 1 1 420px;
     min-width: 0;
     max-width: 560px;
 
-    .eyebrow { letter-spacing: 4px; color: $accent-soft; margin-bottom: 20px; }
+    .eyebrow { letter-spacing: 4px; color: oklch(70% 0.12 82); margin-bottom: 20px; }
 
+    // Always sits over the dark hero background, in both themes —
+    // so the text stays fixed-light rather than following $ink/$muted.
     h1 {
         font-family: $display;
         font-weight: 700;
         font-size: clamp(38px, 5vw, 84px);
         line-height: 0.98;
-        color: $ink;
+        color: oklch(96% 0.004 55);
         margin: 0 0 24px;
         text-transform: uppercase;
+    }
+
+    // Kept fairly small — the source logo file is low-res, and it turns
+    // visibly pixelated once it's scaled up much larger than this.
+    .hero-logo {
+        display: block;
+        width: clamp(160px, 15vw, 220px);
+        height: auto;
+        margin: 0 0 28px;
     }
 
     .hero-subtitle {
         font-size: 17px;
         line-height: 1.6;
-        color: $muted;
+        color: oklch(72% 0.01 55);
         margin: 0 0 36px;
+        max-width: 460px;
+    }
+
+    // Below tablet the video sits directly behind this text (full-bleed),
+    // so — unlike desktop, where the whole section has a dark base — only
+    // the text itself gets a backdrop, to keep it legible without dimming
+    // the video everywhere else.
+    @media (max-width: $bp-tablet) {
+        max-width: 100%;
+        background: oklch(10% 0.004 55 / 0.72);
+        backdrop-filter: blur(8px);
+        border-radius: $radius;
+        padding: 22px 20px;
+
+        .hero-subtitle { max-width: 100%; }
     }
 }
 
-.hero-actions {
+// Minimal animated scroll prompt, bottom-center of the hero — replaces a
+// button row with a lighter invitation to keep scrolling.
+.hero-scroll-cue {
+    position: absolute;
+    left: 50%;
+    bottom: 36px;
+    transform: translateX(-50%);
+    z-index: 3;
     display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-}
-
-.hero-figure {
-    flex: 0 1 420px;
-    min-width: 180px;
-    align-self: stretch;
-    display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    gap: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity $tr-base;
 
-    img {
-        width: 100%;
-        height: auto;
-        max-height: 78vh;
-        object-fit: contain;
-        filter: drop-shadow(0 40px 60px oklch(0% 0 0 / 0.6));
+    &:hover { opacity: 1; }
+
+    @media (max-width: $bp-tablet) { display: none; }
+}
+.hero-scroll-cue-track {
+    position: relative;
+    width: 1px;
+    height: 42px;
+    background: oklch(96% 0.004 55 / 0.25);
+    overflow: hidden;
+}
+.hero-scroll-cue-dot {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 5px;
+    height: 5px;
+    margin-left: -2px;
+    border-radius: 50%;
+    background: oklch(70% 0.12 82);
+    animation: alu-scroll-cue 1.8s ease-in-out infinite;
+}
+.hero-scroll-cue-label {
+    font-family: $sans;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: oklch(85% 0.004 55 / 0.75);
+}
+
+@keyframes alu-scroll-cue {
+    0%   { transform: translateY(0); opacity: 0; }
+    15%  { opacity: 1; }
+    85%  { opacity: 1; }
+    100% { transform: translateY(38px); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-scroll-cue-dot { animation: none; top: auto; bottom: 0; }
+}
+
+// Vertical looping reel — left edge attached to the boundary between the
+// hero's text half and media half (the horizontal center), ~38% wide, full
+// hero height. Deliberately NOT pinned to the viewport's right edge — its
+// own right edge fades softly into the background instead. Sibling of
+// .hero-inner (not nested inside the padded .container) so it isn't
+// constrained by the container's own max-width. Below tablet it becomes
+// the hero's full-bleed background instead (text moves to the bottom, over
+// it — see .hero-text's own backdrop).
+.hero-video-wrap {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    z-index: 1;
+    width: 38%;
+    height: 100%;
+    overflow: hidden;
+
+    // Fades both edges into the background — the left one (against the
+    // text) and the right one (floating over plain background) — so neither
+    // side of the box reads as a hard-edged container.
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background:
+            linear-gradient(90deg, oklch(13% 0.004 55) 0%, oklch(13% 0.004 55 / 0) 30%),
+            linear-gradient(270deg, oklch(13% 0.004 55) 0%, oklch(13% 0.004 55 / 0) 60%);
+        pointer-events: none;
     }
 
-    @media (max-width: $bp-tablet) { width: 100%; }
+    @media (max-width: $bp-tablet) {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+
+        &::before { display: none; }
+    }
+}
+
+.hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 // Inner page hero (About, Models, Contact, FAQ) — simpler centered band
@@ -132,21 +233,40 @@
     max-width: 640px;
     margin: 0 auto;
 
+    .eyebrow { color: oklch(70% 0.12 82); }
+
+    // Same reasoning as .hero-text above — .page-hero-overlay is always a
+    // dark scrim, so keep this text fixed-light in both themes.
     h1 {
         font-family: $display;
         font-weight: 700;
         font-size: clamp(36px, 4.6vw, 64px);
-        color: $ink;
+        color: oklch(96% 0.004 55);
         margin: 0 0 20px;
         text-transform: uppercase;
     }
 
     .hero-subtitle {
         font-size: 16px;
-        color: $muted-2;
+        color: oklch(65% 0.01 55);
         margin: 0 auto;
         max-width: 560px;
     }
 
     .btn { margin-top: 28px; }
+}
+
+// Light theme, hero without a photo: the scrim has nothing to sit on top of,
+// so instead of a grey band across a white page drop it entirely and flip the
+// text dark. Heroes WITH a photo (.has-bg) keep the scrim + light text, which
+// is what makes them readable over the image.
+[data-theme="light"] .page-hero:not(.has-bg) {
+    .page-hero-overlay { display: none; }
+
+    .page-hero-content {
+        h1 { color: $ink; }
+        .eyebrow { color: $accent-soft; }
+        .hero-subtitle,
+        .page-hero-subtitle { color: $muted-2; }
+    }
 }

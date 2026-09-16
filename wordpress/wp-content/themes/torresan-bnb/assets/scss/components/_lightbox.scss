@@ -6,7 +6,8 @@
     position: fixed;
     inset: 0;
     z-index: 9999;
-    background: oklch(8% 0.004 55 / 0.94);
+    background: oklch(8% 0.004 55 / 0.96);
+    backdrop-filter: blur(6px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,35 +16,95 @@
     transition: opacity $tr-base, visibility $tr-base;
 
     &.is-open { opacity: 1; visibility: visible; }
-
-    img {
-        max-width: 92vw;
-        max-height: 88vh;
-        object-fit: contain;
-    }
 }
-.lightbox-close {
+
+.lightbox-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 0 88px;   // spazio per le frecce laterali
+
+    @media (max-width: $bp-tablet) { padding: 0 16px; }
+}
+
+// Le dimensioni effettive le calcola il JS (vedi lightbox.js): la maggior
+// parte delle foto in archivio è sotto gli 800px, quindi portarle a tutto
+// schermo le sgranerebbe. Il JS ingrandisce fino a un fattore massimo,
+// restando comunque dentro il viewport. Qui restano solo i limiti di sicurezza.
+.lightbox-img {
+    display: block;
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+}
+
+// Controlli: pastiglia semitrasparente, così restano leggibili anche sopra
+// una foto chiara.
+%lightbox-control {
     position: absolute;
-    top: 24px; right: 32px;
-    font-size: 32px;
-    color: $ink;
-    background: none;
-    border: none;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid oklch(100% 0 0 / 0.18);
+    border-radius: 50%;
+    background: oklch(10% 0.004 55 / 0.55);
+    backdrop-filter: blur(8px);
+    color: oklch(96% 0.004 55);
     cursor: pointer;
     line-height: 1;
+    transition: background $tr-base, border-color $tr-base, color $tr-base, transform $tr-base;
+
+    &:hover {
+        background: $accent;
+        border-color: $accent;
+        color: oklch(13% 0.004 55);
+    }
 }
+
+.lightbox-close {
+    @extend %lightbox-control;
+    top: 24px;
+    right: 28px;
+    width: 48px;
+    height: 48px;
+    font-size: 26px;
+    padding-bottom: 3px;
+
+    @media (max-width: $bp-tablet) { top: 14px; right: 14px; width: 42px; height: 42px; font-size: 22px; }
+}
+
 .lightbox-prev,
 .lightbox-next {
-    position: absolute;
+    @extend %lightbox-control;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 40px;
-    color: $ink;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 12px;
-    &:hover { color: $accent; }
+    width: 56px;
+    height: 56px;
+    font-size: 26px;
+
+    &:hover { transform: translateY(-50%) scale(1.06); }
+
+    @media (max-width: $bp-tablet) { width: 42px; height: 42px; font-size: 20px; }
 }
-.lightbox-prev { left: 20px; }
-.lightbox-next { right: 20px; }
+
+.lightbox-prev { left: 22px; @media (max-width: $bp-tablet) { left: 10px; } }
+.lightbox-next { right: 22px; @media (max-width: $bp-tablet) { right: 10px; } }
+
+.lightbox-counter {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    font-family: $sans;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: oklch(80% 0.01 55);
+    background: oklch(10% 0.004 55 / 0.55);
+    backdrop-filter: blur(8px);
+    border-radius: 999px;
+    padding: 7px 16px;
+}

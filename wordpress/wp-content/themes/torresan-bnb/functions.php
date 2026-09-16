@@ -48,6 +48,51 @@ add_filter('gutenberg_can_edit_post', function (bool $use, $post) use ($_torresa
     return $use;
 }, 10, 2);
 
+/**
+ * Ricarica le traduzioni del tema con il locale definitivo.
+ *
+ * load_theme_textdomain() gira su 'after_setup_theme', quando la lingua della
+ * richiesta non è ancora decisa: determine_locale() restituisce il locale del
+ * sito (en_GB) e WordPress cerca torresan-bnb-en_GB.mo, che non esiste. Non
+ * carica nulla e, quando Polylang poco dopo imposta it_IT, niente riprova:
+ * risultato, su /it/ eyebrow, titoli di sezione e CTA restavano in inglese.
+ *
+ * Qui il dominio viene scaricato e ricaricato una volta che la lingua è nota.
+ */
+function torresan_bnb_reload_textdomain(): void
+{
+    $locale = determine_locale();
+
+    // Per l'inglese non serve nulla: i msgid nel codice sono già in inglese.
+    if (str_starts_with($locale, 'en')) {
+        return;
+    }
+
+    $mofile = get_template_directory() . '/languages/torresan-bnb-' . $locale . '.mo';
+
+    if (! is_readable($mofile)) {
+        return;
+    }
+
+    // load_textdomain() con percorso esplicito invece di load_theme_textdomain():
+    // quest'ultima, su questa installazione, restituiva true senza però rendere
+    // disponibili le traduzioni (verificato: __() continuava a restituire il
+    // msgid). Passando direttamente il file il dominio si carica davvero.
+    unload_textdomain('torresan-bnb');
+    load_textdomain('torresan-bnb', $mofile);
+}
+
+// Polylang segnala qui che la lingua della richiesta è stata determinata.
+add_action('pll_language_defined', 'torresan_bnb_reload_textdomain');
+
+// Rete di sicurezza: se Polylang non è attivo o l'action cambia nome, si
+// ricarica comunque prima che parta il rendering del template.
+add_action('template_redirect', function (): void {
+    if (! is_textdomain_loaded('torresan-bnb')) {
+        torresan_bnb_reload_textdomain();
+    }
+}, 0);
+
 function torresan_bnb_setup(): void
 {
     load_theme_textdomain('torresan-bnb', get_template_directory() . '/languages');
@@ -58,14 +103,17 @@ function torresan_bnb_setup(): void
     add_theme_support('html5', ['search-form', 'gallery', 'caption', 'style', 'script']);
 
     register_nav_menus([
-        'primary'      => __('Menu Principale', 'torresan-bnb'),
-        'footer'       => __('Menu Footer', 'torresan-bnb'),
+        'primary'      => __('Main Menu', 'torresan-bnb'),
+        'footer'       => __('Footer Menu', 'torresan-bnb'),
         'footer-legal' => __('Footer — Legal links', 'torresan-bnb'),
     ]);
 
     add_image_size('hero-bg', 1920, 1080, true);
     add_image_size('section-card', 800, 600, true);
     add_image_size('gallery-thumb', 600, 450, true);
+    // Uncropped, tall — for transparent instrument cutouts (product shots),
+    // never hard-cropped like hero-bg so the whole instrument stays visible.
+    add_image_size('product-shot', 1000, 1600, false);
 }
 add_action('after_setup_theme', 'torresan_bnb_setup');
 
@@ -105,9 +153,11 @@ add_filter('attachment_fields_to_edit', 'torresan_bnb_media_tag_help', 10, 2);
 
 function torresan_bnb_assets(): void
 {
-    wp_enqueue_style('torresan-bnb-fonts', 'https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&display=swap', [], null);
-    wp_enqueue_style('torresan-bnb-main', get_template_directory_uri() . '/assets/dist/main.min.css', ['torresan-bnb-fonts'], '5.0.0');
-    wp_enqueue_script('torresan-bnb-main', get_template_directory_uri() . '/assets/dist/main.min.js', ['jquery'], '5.0.0', true);
+    wp_enqueue_style('torresan-bnb-fonts', 'https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap', [], null);
+    $css_path = get_template_directory() . '/assets/dist/main.min.css';
+    $js_path  = get_template_directory() . '/assets/dist/main.min.js';
+    wp_enqueue_style('torresan-bnb-main', get_template_directory_uri() . '/assets/dist/main.min.css', ['torresan-bnb-fonts'], file_exists($css_path) ? (string) filemtime($css_path) : '5.0.0');
+    wp_enqueue_script('torresan-bnb-main', get_template_directory_uri() . '/assets/dist/main.min.js', ['jquery'], file_exists($js_path) ? (string) filemtime($js_path) : '5.0.0', true);
 
     // Language switcher styles (Polylang)
     $lang_css = '
@@ -121,15 +171,80 @@ function torresan_bnb_assets(): void
 .lang-switcher-list .lang-item + .lang-item::before { content:"|"; opacity:.3; margin-right:.35rem; font-size:.55rem; }
 /* Header switcher */
 .lang-switcher--header { margin-right:.25rem; }
-/* Nav overlay switcher — hidden on desktop, shown on mobile inside open nav */
-.lang-switcher--nav { display:none; margin-top:1.5rem; }
-.site-nav.is-open .lang-switcher--nav { display:inline-flex; }
+/* Header switcher — vive in .header-tools, visibile da tablet in su.
+   Prima era nascosto e mostrato solo dentro il pannello mobile scorrevole
+   (.site-nav.is-open), che non esiste più: su telefono il cambio lingua sta
+   nel mega menu. */
+.lang-switcher--nav { display:inline-flex; }
+/* Mega menu switcher */
+.lang-switcher--mega { margin-top:1.75rem; font-size:1rem; }
+.lang-switcher--mega .lang-item { font-size:.8rem; }
 /* Footer switcher */
 .lang-switcher--footer { margin:0 auto; }
 ';
     wp_add_inline_style('torresan-bnb-main', $lang_css);
 }
 add_action('wp_enqueue_scripts', 'torresan_bnb_assets');
+
+/**
+ * Aggancia il filemtime del file all'URL di un allegato.
+ *
+ * I ritagli hero dei modelli vengono sostituiti sul posto — stesso nome file,
+ * contenuto nuovo (vedi scripts/refresh-hero-cutouts.php, necessario perché
+ * alu_import() deduplica per nome). L'URL quindi non cambia mai e i browser
+ * continuano a servire i byte vecchi dalla cache anche dopo l'aggiornamento.
+ * Legando la querystring al mtime, ogni sostituzione genera un URL diverso e
+ * l'immagine nuova arriva da sola, senza chiedere un hard-refresh.
+ */
+function torresan_attachment_mtime_version(string $url): string
+{
+    if (! $url || strpos($url, '?') !== false) {
+        return $url;
+    }
+
+    $uploads = wp_get_upload_dir();
+    if (empty($uploads['baseurl']) || strpos($url, $uploads['baseurl']) !== 0) {
+        return $url;
+    }
+
+    $path  = $uploads['basedir'] . substr($url, strlen($uploads['baseurl']));
+    $mtime = is_file($path) ? filemtime($path) : false;
+
+    return $mtime ? add_query_arg('v', $mtime, $url) : $url;
+}
+
+/**
+ * Applica il versioning solo in front-end: in admin gli URL degli allegati
+ * vengono anche riletti per risalire all'ID (attachment_url_to_postid), e una
+ * querystring in più lì darebbe solo fastidio.
+ */
+function torresan_bnb_version_attachment_urls(): void
+{
+    if (is_admin()) {
+        return;
+    }
+
+    add_filter('wp_get_attachment_url', 'torresan_attachment_mtime_version', 20);
+
+    add_filter('wp_get_attachment_image_src', static function ($image) {
+        if (is_array($image) && ! empty($image[0])) {
+            $image[0] = torresan_attachment_mtime_version((string) $image[0]);
+        }
+        return $image;
+    }, 20);
+
+    add_filter('wp_calculate_image_srcset', static function ($sources) {
+        if (is_array($sources)) {
+            foreach ($sources as $w => $source) {
+                if (! empty($source['url'])) {
+                    $sources[$w]['url'] = torresan_attachment_mtime_version((string) $source['url']);
+                }
+            }
+        }
+        return $sources;
+    }, 20);
+}
+add_action('init', 'torresan_bnb_version_attachment_urls');
 
 function torresan_bnb_hide_contact_menu_items(array $items, stdClass $args): array
 {
@@ -203,10 +318,16 @@ add_action('init', function (): void {
 });
 
 // Remove ?ver= fingerprint from enqueued script and style URLs (OWASP A05)
-add_filter('script_loader_src', 'torresan_bnb_strip_asset_ver', 15);
-add_filter('style_loader_src', 'torresan_bnb_strip_asset_ver', 15);
-function torresan_bnb_strip_asset_ver(string $src): string
+// — except our own theme bundle, whose ?ver is a filemtime cache-buster
+// (not a software version number), so keeping it doesn't leak anything and
+// lets browsers pick up new CSS/JS immediately after each deploy.
+add_filter('script_loader_src', 'torresan_bnb_strip_asset_ver', 15, 2);
+add_filter('style_loader_src', 'torresan_bnb_strip_asset_ver', 15, 2);
+function torresan_bnb_strip_asset_ver(string $src, string $handle): string
 {
+    if ($handle === 'torresan-bnb-main') {
+        return $src;
+    }
     return $src ? remove_query_arg('ver', $src) : $src;
 }
 
@@ -364,6 +485,27 @@ function torresan_bg_vars_attr(string $prefix, string $desktop_url, string $mobi
  * Style attribute for the page/home hero background, with mobile fallback
  * to the `hero_bg_mobile` Pods field (falls back to the desktop image if unset).
  */
+/**
+ * Class list for a .page-hero section.
+ *
+ * Adds `has-bg` when the page actually has a hero photo behind it. The dark
+ * scrim (.page-hero-overlay) is only justified over a photo: on the light
+ * theme a hero without an image would otherwise render as a grey band across
+ * an otherwise white page, so the stylesheet keys off this class to drop the
+ * scrim and flip the text to dark instead.
+ */
+function torresan_hero_class(?int $post_id = null, string $mobile_field = 'hero_bg_mobile'): string
+{
+    if (! $post_id) {
+        $post_id = get_the_ID();
+    }
+
+    $has_bg = get_the_post_thumbnail_url($post_id, 'hero-bg')
+        || torresan_image_url($mobile_field, 'hero-bg', $post_id);
+
+    return $has_bg ? 'page-hero has-bg' : 'page-hero';
+}
+
 function torresan_hero_style_attr(?int $post_id = null, string $mobile_field = 'hero_bg_mobile'): string
 {
     if (! $post_id) {
@@ -428,6 +570,35 @@ function torresan_image_url(string $name, string $size = 'full', ?int $post_id =
 
     $att_id = (int) get_post_meta($post_id, $name, true);
     return $att_id ? (wp_get_attachment_image_url($att_id, $size) ?: '') : '';
+}
+
+/**
+ * Get the raw URL of a single-file Pods file field, whatever the mime type
+ * (video, audio…) — unlike torresan_image_url() this doesn't go through an
+ * image-size crop, since wp_get_attachment_image_url() only works for images.
+ */
+function torresan_file_url(string $name, ?int $post_id = null): string
+{
+    if (! $post_id) {
+        $post_id = get_the_ID();
+    }
+
+    $pod = torresan_pod($post_id);
+
+    if ($pod) {
+        $val = $pod->field($name);
+
+        if (is_array($val) && ! empty($val['ID'])) {
+            return wp_get_attachment_url((int) $val['ID']) ?: '';
+        }
+
+        if (is_numeric($val) && (int) $val > 0) {
+            return wp_get_attachment_url((int) $val) ?: '';
+        }
+    }
+
+    $att_id = (int) get_post_meta($post_id, $name, true);
+    return $att_id ? (wp_get_attachment_url($att_id) ?: '') : '';
 }
 
 /**
@@ -627,11 +798,17 @@ function torresan_related_post_ids(string $field_name, ?int $post_id = null): ar
 require_once get_template_directory() . '/inc/post-types.php';
 require_once get_template_directory() . '/inc/pods-fields.php';
 require_once get_template_directory() . '/inc/seed-pages.php';
-require_once get_template_directory() . '/inc/seed-translations.php';
-require_once get_template_directory() . '/inc/seed-cpt-i18n.php';
+// NOTA: seed-translations.php, seed-cpt-i18n.php, translation-sync.php e
+// inc/translations/*.php sono stati rimossi. Contenevano le traduzioni del
+// vecchio sito Torre San Bartolo indicizzate per ID di post: su questa
+// installazione quegli ID appartengono ora ad allegati Alusonic e — peggio —
+// agli oggetti di configurazione Pods (il pod "Models" e i suoi campi).
+// L'import, che partiva da solo su admin_init, avrebbe sovrascritto lo schema
+// Pods con testi da hotel. Il multilingua ora si configura con
+// scripts/i18n-setup.php (solo EN + IT).
 require_once get_template_directory() . '/inc/site-settings.php';
-require_once get_template_directory() . '/inc/translation-sync.php';
 require_once get_template_directory() . '/inc/media-sync.php';
+require_once get_template_directory() . '/inc/admin-pods-visibility.php';
 
 /* ─── Register custom CPTs with Polylang ─── */
 add_filter('pll_get_post_types', function (array $types, bool $is_settings): array {
@@ -1029,9 +1206,9 @@ function torresan_render_page_hero(?int $post_id = null): void
     $eyebrow  = torresan_field('hero_eyebrow', $post_id);
     $subtitle = torresan_field('hero_subtitle', $post_id);
     $btn_text = torresan_field('hero_cta_text', $post_id);
-    $btn_url  = torresan_field('hero_cta_url', $post_id);
+    $btn_url  = torresan_localize_url(torresan_field('hero_cta_url', $post_id));
     ?>
-    <section class="page-hero" <?php if ($hero_img) : ?>style="background-image:url('<?php echo esc_url($hero_img); ?>')"<?php endif; ?>>
+    <section class="<?php echo esc_attr($hero_img ? 'page-hero has-bg' : 'page-hero'); ?>" <?php if ($hero_img) : ?>style="background-image:url('<?php echo esc_url($hero_img); ?>')"<?php endif; ?>>
         <div class="page-hero-overlay"></div>
         <div class="page-hero-content">
             <?php if ($eyebrow) : ?>
@@ -1072,6 +1249,80 @@ function torresan_render_editor_content(): void
 /* ─── Alusonic helpers ─── */
 
 /**
+ * Riporta un URL interno alla lingua corrente.
+ *
+ * I campi CTA (hero_cta_url, home_mat_cta_url…) contengono URL assoluti salvati
+ * una volta sola: la home italiana finiva così a puntare alle pagine inglesi.
+ * Qui l'URL viene risolto al post corrispondente e sostituito con il permalink
+ * della sua traduzione nella lingua corrente.
+ *
+ * Gli URL esterni (Instagram, YouTube, microsito StratOSonic) e quelli non
+ * risolvibili vengono restituiti invariati.
+ */
+function torresan_localize_url(string $url): string
+{
+    $url = trim($url);
+    if ($url === '' || ! function_exists('pll_get_post')) {
+        return $url;
+    }
+
+    // Solo link interni: confronto sull'host del sito.
+    $home_host = wp_parse_url(home_url(), PHP_URL_HOST);
+    $url_host  = wp_parse_url($url, PHP_URL_HOST);
+    if ($url_host && $url_host !== $home_host) {
+        return $url;
+    }
+
+    $post_id = url_to_postid($url);
+    if (! $post_id) {
+        return $url;
+    }
+
+    $lang = function_exists('pll_current_language') ? pll_current_language() : '';
+    if (! $lang) {
+        return $url;
+    }
+
+    $translated = pll_get_post($post_id, $lang);
+
+    return $translated ? get_permalink($translated) : $url;
+}
+
+/**
+ * Trova una pagina per slug e restituisce la versione nella lingua corrente.
+ *
+ * get_page_by_path() non conosce le lingue: con italiano e inglese che
+ * condividono la stessa struttura restituisce sempre la prima pagina trovata,
+ * cioè quella inglese. È così che, sulla home italiana, la sezione "Chi siamo"
+ * mostrava titolo e testo in inglese.
+ *
+ * Accetta più slug (es. 'about', 'chi-siamo') e prova in ordine.
+ */
+function torresan_localized_page(string ...$slugs): ?WP_Post
+{
+    foreach ($slugs as $slug) {
+        $page = get_page_by_path($slug);
+        if (! $page) {
+            continue;
+        }
+
+        if (function_exists('pll_get_post')) {
+            $lang = function_exists('pll_current_language') ? pll_current_language() : '';
+            if ($lang) {
+                $translated = pll_get_post($page->ID, $lang);
+                if ($translated) {
+                    return get_post($translated);
+                }
+            }
+        }
+
+        return $page;
+    }
+
+    return null;
+}
+
+/**
  * Parse a textarea field of "Left|Right" lines into an array of [left, right] pairs.
  *
  * @return array<int, array{0:string,1:string}>
@@ -1091,7 +1342,26 @@ function alusonic_parse_pairs(string $raw): array
 }
 
 /**
- * Machine type of a model (basso|chitarra|cabinet), for filtering.
+ * Extract a YouTube video ID from either a bare ID or a full URL
+ * (watch?v=, youtu.be/, embed/, shorts/).
+ */
+function alusonic_youtube_id(string $raw): string
+{
+    $raw = trim($raw);
+    if ($raw === '') {
+        return '';
+    }
+    if (preg_match('/^[A-Za-z0-9_-]{11}$/', $raw)) {
+        return $raw;
+    }
+    if (preg_match('#(?:youtu\.be/|youtube(?:-nocookie)?\.com/(?:watch\?v=|embed/|shorts/))([A-Za-z0-9_-]{11})#', $raw, $m)) {
+        return $m[1];
+    }
+    return '';
+}
+
+/**
+ * Machine type of a model (basso|chitarra), for filtering.
  */
 function alusonic_model_type(int $post_id): string
 {
@@ -1104,16 +1374,24 @@ function alusonic_model_type(int $post_id): string
  */
 function alusonic_render_model_card(int $post_id): void
 {
-    $cat   = torresan_field('model_category', $post_id);
-    $lead  = torresan_field('model_lead', $post_id);
-    $type  = alusonic_model_type($post_id);
+    $type      = alusonic_model_type($post_id);
+    $type_label = [
+        'basso'    => __('Bass', 'torresan-bnb'),
+        'chitarra' => __('Guitar', 'torresan-bnb'),
+    ][$type] ?? '';
     $thumb = get_post_thumbnail_id($post_id);
     $img   = $thumb ? wp_get_attachment_image_url($thumb, 'large') : '';
     $title = get_the_title($post_id);
+
+    // Linea di prodotto e flag signature: chiavi macchina impostate da
+    // scripts/set-model-family.php, su cui lavorano i filtri del catalogo.
+    $family    = (string) get_post_meta($post_id, 'model_family', true);
+    $signature = get_post_meta($post_id, 'model_signature', true) ? '1' : '0';
     ?>
-    <a class="model-card" data-tilt data-type="<?php echo esc_attr($type); ?>" href="<?php echo esc_url(get_permalink($post_id)); ?>">
+    <a class="model-card" data-tilt data-type="<?php echo esc_attr($type); ?>" data-family="<?php echo esc_attr($family); ?>" data-signature="<?php echo esc_attr($signature); ?>" data-name="<?php echo esc_attr(mb_strtolower($title)); ?>" href="<?php echo esc_url(get_permalink($post_id)); ?>">
         <div class="mc-stage">
             <div class="mc-bg"></div>
+            <div class="mc-glow"></div>
             <div class="mc-frame"></div>
             <?php if ($img) : ?>
             <div class="mc-subject">
@@ -1121,10 +1399,9 @@ function alusonic_render_model_card(int $post_id): void
             </div>
             <?php endif; ?>
             <div class="mc-caption">
-                <?php if ($cat) : ?><div class="model-card-cat"><?php echo esc_html($cat); ?></div><?php endif; ?>
+                <?php if ($type_label) : ?><div class="model-card-cat"><?php echo esc_html($type_label); ?></div><?php endif; ?>
                 <div class="model-card-name"><?php echo esc_html($title); ?></div>
-                <?php if ($lead) : ?><div class="model-card-desc"><?php echo esc_html(wp_trim_words($lead, 14)); ?></div><?php endif; ?>
-                <span class="model-card-more"><?php esc_html_e('Scopri', 'torresan-bnb'); ?> &rarr;</span>
+                <span class="model-card-more"><?php esc_html_e('Discover', 'torresan-bnb'); ?> &rarr;</span>
             </div>
         </div>
     </a>
@@ -1205,48 +1482,13 @@ function torresan_render_carousel(array $ids, string $group_id = 'carousel', arr
 
 /* ─── Language Switcher (Polylang) ─── */
 
-/**
- * One-time auto-setup of Polylang languages (EN, IT, DE, FR, ES).
- * Runs once on admin_init if Polylang is active and no languages are registered yet.
- * Remove this after first admin visit if needed.
+/*
+ * L'auto-registrazione delle lingue su admin_init è stata rimossa: creava
+ * EN, IT, DE, FR ed ES (qui servono solo inglese e italiano) e, impostando
+ * l'opzione torresan_pll_languages_seeded, faceva da innesco agli import
+ * delle traduzioni del vecchio sito B&B — vedi la nota nel blocco Includes.
+ * La configurazione ora è esplicita e ripetibile: scripts/i18n-setup.php.
  */
-add_action('admin_init', function (): void {
-    if (! function_exists('PLL') || get_option('torresan_pll_languages_seeded')) {
-        return;
-    }
-
-    $pll = PLL();
-    if (! $pll || ! isset($pll->model) || ! method_exists($pll->model, 'add_language')) {
-        return;
-    }
-
-    $languages = [
-        ['name' => 'English',  'slug' => 'en', 'locale' => 'en_US', 'rtl' => 0, 'term_group' => 0],
-        ['name' => 'Italiano', 'slug' => 'it', 'locale' => 'it_IT', 'rtl' => 0, 'term_group' => 0],
-        ['name' => 'Deutsch',  'slug' => 'de', 'locale' => 'de_DE', 'rtl' => 0, 'term_group' => 0],
-        ['name' => 'Français', 'slug' => 'fr', 'locale' => 'fr_FR', 'rtl' => 0, 'term_group' => 0],
-        ['name' => 'Español',  'slug' => 'es', 'locale' => 'es_ES', 'rtl' => 0, 'term_group' => 0],
-    ];
-
-    $any_added = false;
-    foreach ($languages as $lang) {
-        if ($pll->model->get_language($lang['slug'])) {
-            continue; // already exists
-        }
-        $result = $pll->model->add_language($lang);
-        if (! is_wp_error($result)) {
-            $any_added = true;
-        }
-    }
-
-    // Mark default language as English and record that setup ran
-    $opts = (array) get_option('polylang', []);
-    if (empty($opts['default_lang'])) {
-        $opts['default_lang'] = 'en';
-        update_option('polylang', $opts);
-    }
-    update_option('torresan_pll_languages_seeded', '1');
-});
 
 /* ─── Polylang Security Hardening ─────────────────────────────────────────
  * OWASP A01 — Broken Access Control
@@ -1358,17 +1600,17 @@ add_action('wp_head', function (): void {
         return;
     }
 
-    // Build address from location page or fallback
-    $location_id = 0;
-    $loc_page = get_page_by_path('location');
-    if ($loc_page) $location_id = $loc_page->ID;
+    // Indirizzo dalle Impostazioni Sito. Il fallback precedente era ancora
+    // quello del vecchio sito Torre San Bartolo e finiva nei dati strutturati.
+    $settings     = torresan_get_site_settings();
+    $address_text = trim((string) ($settings['footer_address'] ?? ''));
+    $address_text = $address_text !== ''
+        ? preg_replace('/\s*\n\s*/', ', ', $address_text)
+        : 'Via Serrata, 4a, 47833 Morciano di Romagna (RN), Italy';
 
-    $address_text = $location_id ? get_post_meta($location_id, 'address', true) : '';
-    $address_text = $address_text ?: 'Torre San Bartolo, 60010, Pesaro, PU, Italy';
-
-    // Build phone/email from contact page
+    // Telefono/email dalla pagina Contatti nella lingua corrente
     $contact_id = 0;
-    $con_page = get_page_by_path('contact');
+    $con_page = torresan_localized_page('contact', 'contatti');
     if ($con_page) $contact_id = $con_page->ID;
 
     $phone = $contact_id ? get_post_meta($contact_id, 'contatti_telefono', true) : '';
@@ -1579,7 +1821,7 @@ add_action('wp_enqueue_scripts', function (): void {
  */
 function torresan_booking_url(string $fallback = ''): string
 {
-    $page = get_page_by_path('contact') ?: get_page_by_path('contatti');
+    $page = torresan_localized_page('contact', 'contatti');
     if ($page) {
         return esc_url(get_permalink($page->ID));
     }

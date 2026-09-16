@@ -12,13 +12,13 @@ while (have_posts()) : the_post();
     $model = torresan_field('artist_model', $pid);
     $photo = get_the_post_thumbnail_url($pid, 'hero-bg');
 
-    $about = get_page_by_path('about') ?: get_page_by_path('chi-siamo');
+    $about = torresan_localized_page('about', 'chi-siamo');
     $about_url = $about ? get_permalink($about->ID) : home_url('/');
 ?>
 
 <main>
     <section class="container model-back">
-        <a href="<?php echo esc_url($about_url); ?>">&larr; <?php esc_html_e('Chi Siamo', 'torresan-bnb'); ?></a>
+        <a href="<?php echo esc_url($about_url); ?>">&larr; <?php esc_html_e('About Us', 'torresan-bnb'); ?></a>
     </section>
 
     <section class="section">
@@ -32,7 +32,7 @@ while (have_posts()) : the_post();
                 <?php if ($quote) : ?><p style="font-size:18px;color:var(--accent);font-style:italic;margin-bottom:24px">“<?php echo esc_html($quote); ?>”</p><?php endif; ?>
                 <div class="wysiwyg-content"><?php the_content(); ?></div>
                 <?php if ($model) : ?>
-                    <p style="margin-top:24px"><strong style="color:#fff"><?php esc_html_e('Suona:', 'torresan-bnb'); ?></strong> <?php echo esc_html($model); ?></p>
+                    <p style="margin-top:24px"><strong style="color:#fff"><?php esc_html_e('Plays:', 'torresan-bnb'); ?></strong> <?php echo esc_html($model); ?></p>
                 <?php endif; ?>
             </div>
         </div>
@@ -41,8 +41,8 @@ while (have_posts()) : the_post();
     <section class="cta-band section-alt">
         <div class="container">
             <h2><?php esc_html_e('Play Different', 'torresan-bnb'); ?></h2>
-            <p><?php esc_html_e('Scopri i modelli Alusonic e trova il tuo suono.', 'torresan-bnb'); ?></p>
-            <a class="btn btn-lg" href="<?php echo esc_url(get_permalink(get_page_by_path('models') ?: get_page_by_path('modelli'))); ?>"><?php esc_html_e('Scopri i Modelli', 'torresan-bnb'); ?></a>
+            <p><?php esc_html_e('Explore the Alusonic models and find your sound.', 'torresan-bnb'); ?></p>
+            <a class="btn btn-lg" href="<?php echo esc_url(get_permalink(torresan_localized_page('models', 'modelli'))); ?>"><?php esc_html_e('Explore the Models', 'torresan-bnb'); ?></a>
         </div>
     </section>
 </main>

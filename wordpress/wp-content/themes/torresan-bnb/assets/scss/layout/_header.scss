@@ -3,6 +3,20 @@
 // ─────────────────────────────────────────────
 
 .site-header {
+    // The header bar is always dark (fixed oklch below), in both themes —
+    // re-pin every token it and its descendants use so nav text, the
+    // brand, language switcher and theme-toggle icon all stay legible
+    // without having to override each of them individually.
+    --c-bg:       oklch(13% 0.004 55);
+    --c-ink:      oklch(96% 0.004 55);
+    --c-muted:    oklch(72% 0.01 55);
+    --c-muted-2:  oklch(65% 0.01 55);
+    --c-muted-3:  oklch(62% 0.01 55);
+    --c-nav-idle: oklch(70% 0.01 55);
+    --c-accent-soft: oklch(70% 0.12 82);
+    --c-border:      oklch(30% 0.01 55 / 0.5);
+    --c-border-soft: oklch(30% 0.01 55 / 0.4);
+
     position: sticky;
     top: 0;
     z-index: 100;
@@ -12,6 +26,47 @@
     transition: background $tr-base;
 
     &.scrolled { background: oklch(12% 0.004 55 / 0.96); }
+
+    // Su telefono la barra sparisce: niente sfondo, niente bordo, niente nav.
+    // Restano solo logo, Instagram e hamburger sopra al contenuto, così
+    // l'header "visibile" esiste solo da tablet in su.
+    @media (max-width: $bp-mobile) {
+        background: transparent;
+        backdrop-filter: none;
+        border-bottom: 0;
+
+        &.scrolled { background: transparent; }
+    }
+}
+
+// Strumenti a destra: lingua, Instagram, tema, CTA, hamburger.
+.header-tools {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.header-ig {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: $nav-idle;
+    text-decoration: none;
+    transition: color $tr-base;
+
+    &:hover { color: $accent; }
+}
+
+// Il logo grande lascia il posto a quello flottante piccolo appena si scorre:
+// altrimenti i due si sovrapporrebbero nell'angolo in alto a sinistra.
+.brand {
+    transition: opacity $tr-base, visibility $tr-base, transform $tr-base;
+}
+.site-header.scrolled .brand {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-6px);
 }
 
 .header-inner {
@@ -32,7 +87,7 @@
     text-decoration: none;
     flex: none;
 
-    .brand-logo { height: 40px; width: auto; display: block; }
+    .brand-logo { height: 52px; width: auto; display: block; }
     .brand-text { display: flex; flex-direction: column; line-height: 1; }
 
     .brand-name {
@@ -87,6 +142,82 @@
         color: $ink;
         border-bottom-color: $accent;
     }
+
+    // ── Dropdown submenus (e.g. Galleria → Foto / Video) ──
+    .menu-item-has-children {
+        position: relative;
+
+        > a::after {
+            content: "";
+            display: inline-block;
+            width: 6px; height: 6px;
+            margin-left: 6px;
+            border-right: 1.5px solid currentColor;
+            border-bottom: 1.5px solid currentColor;
+            transform: translateY(-3px) rotate(45deg);
+        }
+    }
+
+    .sub-menu {
+        list-style: none;
+        margin: 0;
+        padding: 10px 0;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(6px);
+        min-width: 180px;
+        background: oklch(15% 0.006 55 / 0.98);
+        backdrop-filter: blur(10px);
+        border: 1px solid $border;
+        border-radius: $radius-sm;
+        box-shadow: 0 20px 40px oklch(0% 0 0 / 0.5);
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity $tr-base, transform $tr-base, visibility $tr-base;
+        z-index: 20;
+
+        a {
+            display: block;
+            padding: 10px 20px;
+            border-bottom: 0;
+            white-space: nowrap;
+        }
+        a:hover { color: $accent-soft; }
+    }
+
+    .menu-item-has-children:hover > .sub-menu,
+    .menu-item-has-children.is-open > .sub-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+// ── Light/dark theme toggle ──
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    flex: none;
+    border-radius: 50%;
+    border: 1px solid $border;
+    background: transparent;
+    color: $nav-idle;
+    cursor: pointer;
+    transition: color $tr-base, border-color $tr-base, background $tr-base;
+
+    &:hover { color: $ink; border-color: $accent; }
+
+    .theme-toggle-icon { width: 18px; height: 18px; }
+    .theme-toggle-icon--moon { display: none; }
+}
+// Sun shown in dark mode (click to go light), moon shown in light mode (click to go dark)
+[data-theme="light"] .theme-toggle {
+    .theme-toggle-icon--sun { display: none; }
+    .theme-toggle-icon--moon { display: block; }
 }
 
 .header-cta {
@@ -98,57 +229,60 @@
     color: $bg;
     background: $accent;
     padding: 10px 20px;
+    border: none;
     border-radius: $radius-sm;
     text-decoration: none;
+    cursor: pointer;
     transition: background $tr-base;
 
     &:hover { background: $accent-hover; }
 }
 
+// Hamburger dell'header: usa lo stesso segno a tre barre di quello flottante
+// (vedi _floating-menu.scss) e apre lo stesso mega menu. Compare solo su
+// telefono, dove la nav vera e propria non c'è.
 .menu-toggle {
     display: none;
-    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    gap: 5px;
     width: 40px;
     height: 40px;
     background: none;
     border: none;
     cursor: pointer;
     padding: 8px;
+    color: $ink;
     z-index: 110;
 
-    span {
-        display: block;
-        height: 2px;
-        width: 100%;
-        background: $ink;
-        transition: transform $tr-base, opacity $tr-base;
-    }
+    .wrapper-menu { width: 22px; height: 22px; }
+    .line-menu { background: $ink; }
 
-    &.is-active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    &.is-active span:nth-child(2) { opacity: 0; }
-    &.is-active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    &.is-open .wrapper-menu { transform: rotate(-45deg); }
+    &.is-open .line-menu.start { transform: rotate(-90deg) translateX(1.3px); }
+    &.is-open .line-menu.end   { transform: rotate(-90deg) translateX(-1.3px); }
 }
 
+// Tablet: l'header resta una barra vera, solo più compatta.
 @media (max-width: $bp-tablet) {
-    .menu-toggle { display: flex; }
+    .header-inner { gap: 14px; }
+    .header-tools { gap: 10px; }
+    .header-cta { font-size: 13px; padding: 11px 18px; }
 
-    .site-nav {
-        position: fixed;
-        inset: 0;
-        flex-direction: column;
-        justify-content: center;
-        gap: 28px;
-        background: oklch(11% 0.004 55 / 0.98);
-        backdrop-filter: blur(12px);
-        transform: translateX(100%);
-        transition: transform $tr-medium;
+    .site-nav .menu-list { gap: 16px; }
+    .site-nav .menu-list a { font-size: 13px; }
 
-        &.is-open { transform: translateX(0); }
-        .menu-list { flex-direction: column; gap: 24px; }
-        .menu-list a { font-size: 18px; }
-    }
+    .brand .brand-logo { height: 44px; }
+}
 
-    .header-cta { font-size: 14px; padding: 14px 28px; }
+// Telefono: niente barra e niente nav — solo logo, Instagram e hamburger,
+// che apre il mega menu a schermo intero.
+@media (max-width: $bp-mobile) {
+    .site-nav,
+    .header-cta,
+    .lang-switcher--nav { display: none; }
+
+    .menu-toggle { display: inline-flex; }
+
+    .header-inner { padding: 12px 16px; }
+    .brand .brand-logo { height: 40px; }
 }

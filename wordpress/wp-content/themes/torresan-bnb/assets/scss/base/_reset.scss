@@ -24,8 +24,7 @@ body { overflow-x: hidden; }
 
 html {
     scroll-behavior: smooth;
-    scrollbar-width: thin;
-    scrollbar-color: $border-strong $bg;
+    // scrollbar-width / scrollbar-color: vedi base/_cursor.scss
 }
 
 body {
@@ -36,6 +35,7 @@ body {
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    transition: background-color $tr-medium, color $tr-medium;
 }
 
 ::selection {
@@ -43,10 +43,7 @@ body {
     color: $bg;
 }
 
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: $bg-alt; }
-::-webkit-scrollbar-thumb { background-color: $border-strong; border-radius: 0; }
-::-webkit-scrollbar-thumb:hover { background-color: $accent; }
+// Barra di scorrimento e cursori stanno in base/_cursor.scss.
 
 h1, h2, h3, h4, h5, h6 {
     font-family: $display;
@@ -112,6 +109,10 @@ button { font-family: inherit; }
     ul, ol { margin: 0 0 1.2rem 1.5rem; }
     img { margin: 1rem 0; }
     strong { color: $ink; }
-    a { color: $accent; text-decoration: underline; }
-    a:hover { color: $accent-hover; }
+    // :not(.btn) so a button dropped into rich text (e.g. the Models page
+    // CTA) keeps its own color instead of inheriting the plain-link accent
+    // color on top of its already-accent background — same color on both
+    // made the button text invisible.
+    a:not(.btn) { color: $accent; text-decoration: underline; }
+    a:not(.btn):hover { color: $accent-hover; }
 }

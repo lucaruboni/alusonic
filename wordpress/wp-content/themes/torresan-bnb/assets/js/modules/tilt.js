@@ -1,5 +1,5 @@
 /**
- * Alusonic — 3D tilt for layered model cards + hero parallax (scroll + mouse).
+ * Alusonic — 3D tilt for layered model cards + single-model hero media.
  */
 function initTilt($) {
     var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
@@ -33,40 +33,6 @@ function initTilt($) {
             var inner = this.querySelector('.model-hero-tilt');
             if (inner) { inner.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg) scale(1)'; }
         });
-    }
-
-    // ── Hero parallax: scroll (vertical) + mouse (both axes) ──
-    var $hero    = $('.hero');
-    var $heroBg  = $('.hero-bg');
-    var $heroFig = $('.hero-figure');
-
-    if ($hero.length && ($heroBg.length || $heroFig.length)) {
-        var scrollY = 0, mx = 0, my = 0;
-
-        function apply() {
-            if ($heroBg.length) {
-                $heroBg[0].style.transform =
-                    'translate3d(' + (mx * 22) + 'px,' + (scrollY * 0.15 + my * 16) + 'px,0)';
-            }
-            if ($heroFig.length) {
-                $heroFig[0].style.transform =
-                    'translate3d(' + (mx * -34) + 'px,' + (scrollY * -0.06 + my * -22) + 'px,0)';
-            }
-        }
-
-        $(window).on('scroll', function () { scrollY = window.scrollY || 0; apply(); });
-
-        if (!coarse) {
-            $hero.on('mousemove', function (e) {
-                var r = this.getBoundingClientRect();
-                mx = (e.clientX - r.left) / r.width - 0.5;
-                my = (e.clientY - r.top) / r.height - 0.5;
-                apply();
-            });
-            $hero.on('mouseleave', function () { mx = 0; my = 0; apply(); });
-        }
-
-        apply();
     }
 }
 

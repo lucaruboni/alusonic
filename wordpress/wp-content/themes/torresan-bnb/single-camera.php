@@ -11,23 +11,23 @@ while (have_posts()) : the_post();
     $category   = torresan_field('model_category', $pid);
     $lead       = torresan_field('model_lead', $pid);
     $specs      = alusonic_parse_pairs(torresan_field('model_specs', $pid));
-    $hero_img   = get_the_post_thumbnail_url($pid, 'hero-bg');
+    $hero_img   = get_the_post_thumbnail_url($pid, 'product-shot');
     $gallery    = torresan_gallery_ids('model_gallery', $pid);
     $detail_ttl = torresan_field('model_detail_title', $pid);
-    $detail_img = torresan_image_url('model_detail_image', 'hero-bg', $pid);
+    $detail_img = torresan_image_url('model_detail_image', 'product-shot', $pid);
     $detail_txt = get_post_field('post_content', $pid);
 
-    $models_page = get_page_by_path('models') ?: get_page_by_path('modelli');
+    $models_page = torresan_localized_page('models', 'modelli');
     $models_url  = $models_page ? get_permalink($models_page->ID) : home_url('/models/');
 ?>
 
 <main>
     <section class="container model-back">
-        <a href="<?php echo esc_url($models_url); ?>">&larr; <?php esc_html_e('Tutti i modelli', 'torresan-bnb'); ?></a>
+        <a href="<?php echo esc_url($models_url); ?>">&larr; <?php esc_html_e('All models', 'torresan-bnb'); ?></a>
     </section>
 
     <section class="container model-hero">
-        <div class="model-hero-media">
+        <div class="model-hero-media" data-type="<?php echo esc_attr(alusonic_model_type($pid)); ?>">
             <div class="model-hero-tilt">
                 <?php if ($hero_img) : ?>
                     <img src="<?php echo esc_url($hero_img); ?>" alt="<?php the_title_attribute(); ?>">
@@ -39,33 +39,55 @@ while (have_posts()) : the_post();
             <h1><?php the_title(); ?></h1>
             <?php if ($lead) : ?><p class="model-lead"><?php echo esc_html($lead); ?></p><?php endif; ?>
 
-            <?php if ($specs) : ?>
-            <div class="spec-chips">
-                <?php foreach ($specs as [$label, $value]) : ?>
-                <div class="spec-chip">
-                    <div class="spec-label"><?php echo esc_html($label); ?></div>
-                    <div class="spec-value"><?php echo esc_html($value); ?></div>
+            <?php if ($specs) :
+                $specs_preview = array_slice($specs, 0, 6);
+                $specs_rest    = array_slice($specs, 6);
+            ?>
+            <div class="spec-table">
+                <?php foreach ($specs_preview as [$label, $value]) : ?>
+                <div class="spec-row">
+                    <span class="spec-label"><?php echo esc_html($label); ?></span>
+                    <span class="spec-value"><?php echo esc_html($value); ?></span>
                 </div>
                 <?php endforeach; ?>
             </div>
+            <?php if ($specs_rest) : ?>
+            <details class="spec-more">
+                <summary><?php esc_html_e('Full technical specification', 'torresan-bnb'); ?></summary>
+                <div class="spec-table">
+                    <?php foreach ($specs_rest as [$label, $value]) : ?>
+                    <div class="spec-row">
+                        <span class="spec-label"><?php echo esc_html($label); ?></span>
+                        <span class="spec-value"><?php echo esc_html($value); ?></span>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </details>
+            <?php endif; ?>
             <?php endif; ?>
 
-            <a class="btn" href="<?php echo torresan_booking_url(); ?>"><?php esc_html_e('Richiedi Preventivo', 'torresan-bnb'); ?></a>
+            <a class="btn" href="<?php echo torresan_booking_url(); ?>"><?php esc_html_e('Request a Quote', 'torresan-bnb'); ?></a>
         </div>
     </section>
 
     <?php if ($gallery) : ?>
     <section class="section-alt" style="padding:80px 0">
-        <div class="finish-gallery" data-lightbox-group="model-<?php echo esc_attr($pid); ?>">
-            <?php foreach (array_slice($gallery, 0, 3) as $img_id) :
-                $thumb = wp_get_attachment_image_url($img_id, 'section-card');
-                $full  = wp_get_attachment_image_url($img_id, 'large');
-                if (! $thumb) continue;
-            ?>
-            <div class="finish-item" data-lightbox="<?php echo esc_url($full ?: $thumb); ?>">
-                <img src="<?php echo esc_url($thumb); ?>" alt="" loading="lazy">
+        <div class="container">
+            <div class="section-head-center">
+                <p class="eyebrow"><?php esc_html_e('Gallery', 'torresan-bnb'); ?></p>
+                <h2><?php esc_html_e('Every detail', 'torresan-bnb'); ?></h2>
             </div>
-            <?php endforeach; ?>
+            <div class="parallax-gallery" data-lightbox-group="model-<?php echo esc_attr($pid); ?>">
+                <?php foreach ($gallery as $img_id) :
+                    $thumb = wp_get_attachment_image_url($img_id, 'section-card');
+                    $full  = wp_get_attachment_image_url($img_id, 'full');
+                    if (! $thumb) continue;
+                ?>
+                <div class="parallax-item" data-lightbox="<?php echo esc_url($full ?: $thumb); ?>">
+                    <img class="parallax-item-media" src="<?php echo esc_url($thumb); ?>" alt="<?php the_title_attribute(); ?>" loading="lazy">
+                </div>
+                <?php endforeach; ?>
+            </div>
         </div>
     </section>
     <?php endif; ?>
@@ -74,7 +96,7 @@ while (have_posts()) : the_post();
     <section class="section">
         <div class="container split-2">
             <div class="split-body">
-                <p class="eyebrow"><?php esc_html_e('Dettagli costruttivi', 'torresan-bnb'); ?></p>
+                <p class="eyebrow"><?php esc_html_e('Construction details', 'torresan-bnb'); ?></p>
                 <?php if ($detail_ttl) : ?><h2><?php echo esc_html($detail_ttl); ?></h2><?php endif; ?>
                 <div class="wysiwyg-content"><?php echo apply_filters('the_content', $detail_txt); ?></div>
             </div>
@@ -87,9 +109,9 @@ while (have_posts()) : the_post();
 
     <section class="cta-band section-alt">
         <div class="container">
-            <h2><?php esc_html_e('Vuoi provarlo dal vivo?', 'torresan-bnb'); ?></h2>
-            <p><?php esc_html_e('Prenota una prova nel nostro showroom, o richiedi il preventivo per una configurazione custom.', 'torresan-bnb'); ?></p>
-            <a class="btn btn-lg" href="<?php echo torresan_booking_url(); ?>"><?php esc_html_e('Contattaci', 'torresan-bnb'); ?></a>
+            <h2><?php esc_html_e('Want to try it in person?', 'torresan-bnb'); ?></h2>
+            <p><?php esc_html_e('Book a trial in our showroom, or request a quote for a custom configuration.', 'torresan-bnb'); ?></p>
+            <a class="btn btn-lg" href="<?php echo torresan_booking_url(); ?>"><?php esc_html_e('Get in touch', 'torresan-bnb'); ?></a>
         </div>
     </section>
 </main>

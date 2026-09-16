@@ -19,6 +19,15 @@ var initContactForm = require('./modules/contact-form').initContactForm;
 var initLocationMap = require('./modules/location-map').initLocationMap;
 var initTilt        = require('./modules/tilt').initTilt;
 var initModelsFilter = require('./modules/models-filter').initModelsFilter;
+var initParallaxGallery = require('./modules/parallax-gallery').initParallaxGallery;
+var initArtistModal = require('./modules/artist-modal').initArtistModal;
+var initThemeToggle = require('./modules/theme-toggle').initThemeToggle;
+var initPreloader   = require('./modules/preloader').initPreloader;
+var initScrollCue   = require('./modules/scroll-cue').initScrollCue;
+var initModal       = require('./modules/modal').initModal;
+var initFloatingMenu = require('./modules/floating-menu').initFloatingMenu;
+
+initPreloader();
 
 jQuery(function ($) {
     'use strict';
@@ -31,4 +40,10 @@ jQuery(function ($) {
     initLocationMap($);
     initTilt($);
     initModelsFilter($);
+    initParallaxGallery($);
+    initArtistModal($);
+    initThemeToggle($);
+    initScrollCue($);
+    initModal($);
+    initFloatingMenu($);
 });

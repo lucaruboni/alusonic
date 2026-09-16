@@ -56,8 +56,8 @@ const TORRESAN_MEDIA_SYNC_PRESERVE_TEXT = [
 function torresan_media_sync_menu(): void
 {
     add_management_page(
-        __('Sync Media/Struttura', 'torresan-bnb'),
-        __('Sync Media/Struttura', 'torresan-bnb'),
+        __('Sync Media/Structure', 'torresan-bnb'),
+        __('Sync Media/Structure', 'torresan-bnb'),
         'manage_options',
         'torresan-media-sync',
         'torresan_media_sync_page'
@@ -81,26 +81,26 @@ function torresan_media_sync_page(): void
     }
     ?>
     <div class="wrap">
-        <h1><?php esc_html_e('Sync Media/Struttura EN → Altre Lingue', 'torresan-bnb'); ?></h1>
+        <h1><?php esc_html_e('Sync Media/Structure EN → Other Languages', 'torresan-bnb'); ?></h1>
 
-        <p><?php esc_html_e('Copia dalla versione inglese di ogni Pagina, Suite, Esperienza e FAQ verso le rispettive traduzioni già esistenti nelle altre lingue SOLO le parti non testuali: immagine in evidenza, gallerie, immagini di sfondo, mappe, URL, telefono/email, prezzi, dimensioni, numero ospiti, ordine dei post e i collegamenti (FAQ della pagina, ordine delle esperienze in home). Gli ID dei collegamenti vengono tradotti, così ogni pagina punta ai contenuti nella lingua giusta.', 'torresan-bnb'); ?></p>
-        <p><strong><?php esc_html_e('I testi tradotti NON vengono toccati.', 'torresan-bnb'); ?></strong> <?php esc_html_e('Puoi rilanciare questo strumento ogni volta che il cliente cambia foto o riordina le esperienze in home: le modifiche vengono propagate a tutte le lingue senza sovrascrivere le traduzioni.', 'torresan-bnb'); ?></p>
-        <p><?php esc_html_e('Se una traduzione non esiste ancora, viene saltata e segnalata sotto (va creata a mano collegandola dalla pagina di modifica in Polylang).', 'torresan-bnb'); ?></p>
+        <p><?php esc_html_e('Copies from the English version of every Page, Suite, Experience and FAQ into the corresponding existing translations ONLY the non-textual parts: featured image, galleries, background images, maps, URLs, phone/email, prices, dimensions, guest count, post order and the relationships (page FAQs, home experience order). Relationship IDs are translated, so each page points to content in the right language.', 'torresan-bnb'); ?></p>
+        <p><strong><?php esc_html_e('Translated text is NOT touched.', 'torresan-bnb'); ?></strong> <?php esc_html_e('You can re-run this tool whenever the client changes photos or reorders the home experiences: the changes are propagated to every language without overwriting the translations.', 'torresan-bnb'); ?></p>
+        <p><?php esc_html_e('If a translation does not exist yet it is skipped and reported below (create it manually by linking it from the Polylang edit screen).', 'torresan-bnb'); ?></p>
 
         <form method="post">
             <?php wp_nonce_field('torresan_media_sync', 'torresan_media_sync_nonce'); ?>
-            <?php submit_button(__('Sincronizza media e struttura EN → altre lingue', 'torresan-bnb'), 'primary', 'torresan_media_sync_run'); ?>
+            <?php submit_button(__('Sync media and structure EN → other languages', 'torresan-bnb'), 'primary', 'torresan_media_sync_run'); ?>
         </form>
 
         <?php if ($report !== null) : ?>
-            <h2><?php esc_html_e('Risultato', 'torresan-bnb'); ?></h2>
+            <h2><?php esc_html_e('Result', 'torresan-bnb'); ?></h2>
             <table class="widefat striped" style="max-width:900px;">
                 <thead>
                     <tr>
-                        <th><?php esc_html_e('Tipo', 'torresan-bnb'); ?></th>
-                        <th><?php esc_html_e('Originale (EN)', 'torresan-bnb'); ?></th>
-                        <th><?php esc_html_e('Sincronizzate', 'torresan-bnb'); ?></th>
-                        <th><?php esc_html_e('Mancanti (da creare a mano)', 'torresan-bnb'); ?></th>
+                        <th><?php esc_html_e('Type', 'torresan-bnb'); ?></th>
+                        <th><?php esc_html_e('Original (EN)', 'torresan-bnb'); ?></th>
+                        <th><?php esc_html_e('Synced', 'torresan-bnb'); ?></th>
+                        <th><?php esc_html_e('Missing (create manually)', 'torresan-bnb'); ?></th>
                     </tr>
                 </thead>
                 <tbody>

@@ -25,19 +25,18 @@ get_header();
         <div class="page-hero-overlay"></div>
         <div class="page-hero-content">
             <p class="eyebrow">Errore 404</p>
-            <h1><?php esc_html_e( 'Pagina non trovata', 'torresan-bnb' ); ?></h1>
+            <h1><?php esc_html_e( 'Page not found', 'torresan-bnb' ); ?></h1>
             <p class="hero-subtitle">
                 <?php esc_html_e(
-                    'La pagina che cerchi non esiste o è stata spostata.',
-                    'torresan-bnb'
+                    'The page you are looking for does not exist or has been moved.', 'torresan-bnb'
                 ); ?>
             </p>
             <div class="hero-404-actions">
                 <a class="btn btn-light" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-                    ← <?php esc_html_e( 'Torna alla Home', 'torresan-bnb' ); ?>
+                    ← <?php esc_html_e( 'Back to Home', 'torresan-bnb' ); ?>
                 </a>
                 <a class="btn" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>">
-                    <?php esc_html_e( 'Contattaci', 'torresan-bnb' ); ?>
+                    <?php esc_html_e( 'Get in touch', 'torresan-bnb' ); ?>
                 </a>
             </div>
         </div>

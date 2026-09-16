@@ -7,7 +7,7 @@
 get_header();
 
 $pid          = get_the_ID();
-$eyebrow      = torresan_field('hero_eyebrow', $pid) ?: __('La nostra storia', 'torresan-bnb');
+$eyebrow      = torresan_field('hero_eyebrow', $pid) ?: __('Our story', 'torresan-bnb');
 $story_text   = torresan_field('about_story_text', $pid);
 $story_img    = torresan_image_url('about_story_image', 'hero-bg', $pid);
 $proc_title   = torresan_field('about_process_title', $pid);
@@ -51,7 +51,7 @@ $artist_ids = get_posts([
             <div class="split-media"><img src="<?php echo esc_url($proc_img); ?>" alt="" loading="lazy"></div>
             <?php endif; ?>
             <div class="split-body">
-                <p class="eyebrow"><?php esc_html_e('Materiali & processo', 'torresan-bnb'); ?></p>
+                <p class="eyebrow"><?php esc_html_e('Materials & process', 'torresan-bnb'); ?></p>
                 <?php if ($proc_title) : ?><h2><?php echo esc_html($proc_title); ?></h2><?php endif; ?>
                 <div class="process-list">
                     <?php foreach ($proc_steps as $i => [$title, $desc]) : ?>
@@ -74,8 +74,8 @@ $artist_ids = get_posts([
     <section class="section">
         <div class="container">
             <div class="section-head-center">
-                <p class="eyebrow"><?php esc_html_e('Chi suona Alusonic', 'torresan-bnb'); ?></p>
-                <h2><?php esc_html_e('Artisti & Endorsement', 'torresan-bnb'); ?></h2>
+                <p class="eyebrow"><?php esc_html_e('Who plays Alusonic', 'torresan-bnb'); ?></p>
+                <h2><?php esc_html_e('Artists & Endorsements', 'torresan-bnb'); ?></h2>
             </div>
             <div class="artist-cards">
                 <?php foreach ($artist_ids as $aid) :
@@ -102,9 +102,9 @@ $artist_ids = get_posts([
     <!-- ── CTA ── -->
     <section class="cta-band section-alt">
         <div class="container">
-            <h2><?php esc_html_e('Vieni a conoscerci', 'torresan-bnb'); ?></h2>
-            <p><?php esc_html_e('Il nostro showroom è aperto su appuntamento: vieni a provare i modelli e parlare del tuo strumento su misura.', 'torresan-bnb'); ?></p>
-            <a class="btn btn-lg" href="<?php echo torresan_booking_url(); ?>"><?php esc_html_e('Contattaci', 'torresan-bnb'); ?></a>
+            <h2><?php esc_html_e('Come and meet us', 'torresan-bnb'); ?></h2>
+            <p><?php esc_html_e('Our showroom is open by appointment: come and try the models and talk about your bespoke instrument.', 'torresan-bnb'); ?></p>
+            <a class="btn btn-lg" href="<?php echo torresan_booking_url(); ?>"><?php esc_html_e('Get in touch', 'torresan-bnb'); ?></a>
         </div>
     </section>
 

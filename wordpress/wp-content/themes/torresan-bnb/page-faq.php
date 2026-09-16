@@ -48,7 +48,7 @@ endif;
 <main itemscope itemtype="https://schema.org/FAQPage">
 
     <!-- ── Page Identification Hero ── -->
-    <section class="page-hero"<?php echo torresan_hero_style_attr(); ?>>
+    <section class="<?php echo esc_attr(torresan_hero_class()); ?>"<?php echo torresan_hero_style_attr(); ?>>
         <div class="page-hero-overlay"></div>
         <div class="page-hero-content">
             <?php if ($hero_eyebrow) : ?><p class="eyebrow"><?php echo esc_html($hero_eyebrow); ?></p><?php endif; ?>

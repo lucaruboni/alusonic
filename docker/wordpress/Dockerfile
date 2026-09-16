@@ -16,3 +16,5 @@ RUN a2enmod rewrite headers && \
 		> /docker-entrypoint.d/50-seed-htaccess.sh && \
 	chmod +x /docker-entrypoint.d/50-seed-htaccess.sh
 
+
+	RUN docker-php-ext-install mysqli

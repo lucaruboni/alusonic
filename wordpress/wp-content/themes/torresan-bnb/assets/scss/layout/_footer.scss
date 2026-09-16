@@ -8,6 +8,11 @@
     padding-top: 64px;
 }
 
+// The logo file is white-on-transparent; on the light theme the footer
+// background flips to a light tone (unlike the permanently-dark header),
+// so invert it there rather than needing a second asset.
+[data-theme="light"] .footer-logo { filter: invert(1); }
+
 .footer-inner {
     display: grid;
     grid-template-columns: 1.5fr 1fr 1fr 1fr;
@@ -24,6 +29,19 @@
 }
 
 .footer-brand {
+    // The logo file is white-on-transparent; on the light theme the footer
+    // background flips to a light tone (unlike the permanently-dark
+    // header), so invert it there rather than needing a second asset.
+    .footer-logo-link {
+        display: inline-block;
+        margin-bottom: 18px;
+    }
+    .footer-logo {
+        height: 78px;
+        width: auto;
+        display: block;
+    }
+
     .brand-name {
         font-family: $display;
         font-weight: 700;
@@ -83,7 +101,8 @@
 }
 
 .footer-ig,
-.footer-email {
+.footer-email,
+.footer-phone {
     display: block;
     font-size: 14px;
     color: $accent-soft;
@@ -92,7 +111,10 @@
     transition: color $tr-base;
     &:hover { color: $accent-hover; }
 }
-.footer-email { color: $muted-3; &:hover { color: $ink; } }
+.footer-email,
+.footer-phone { color: $muted-3; &:hover { color: $ink; } }
+
+.footer-social { margin-top: 14px; }
 
 .footer-bottom {
     border-top: 1px solid $border-soft;

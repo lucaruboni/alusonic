@@ -26,8 +26,16 @@ function initHeader($) {
         $('body').css('overflow', isOpen ? '' : 'hidden');
     });
 
-    // Close nav after clicking a link
-    $siteNav.on('click', 'a', function () {
+    // Close nav after clicking a link (but not a parent link that just opens a submenu on mobile)
+    $siteNav.on('click', 'a', function (e) {
+        var $li = $(this).parent();
+        var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+        if (coarse && $li.hasClass('menu-item-has-children') && !$li.hasClass('is-open')) {
+            e.preventDefault();
+            $siteNav.find('.menu-item-has-children.is-open').removeClass('is-open');
+            $li.addClass('is-open');
+            return;
+        }
         if ($siteNav.hasClass('is-open')) {
             $menuToggle.removeClass('is-active').attr('aria-expanded', 'false');
             $siteNav.removeClass('is-open');
