@@ -26,8 +26,10 @@ var initPreloader   = require('./modules/preloader').initPreloader;
 var initScrollCue   = require('./modules/scroll-cue').initScrollCue;
 var initModal       = require('./modules/modal').initModal;
 var initFloatingMenu = require('./modules/floating-menu').initFloatingMenu;
+var initHeroVideo = require('./modules/hero-video').initHeroVideo;
 
 initPreloader();
+initHeroVideo();
 
 jQuery(function ($) {
     'use strict';

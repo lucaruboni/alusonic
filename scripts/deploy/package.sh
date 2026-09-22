@@ -71,6 +71,7 @@ mkdir -p "$OUT_DIR"
 TARBALL="$OUT_DIR/alusonic-deploy-$STAMP.tgz"
 tar czf "$TARBALL" \
 	--exclude='./.git' \
+	--exclude='./.claude' \
 	--exclude='./.env' \
 	--exclude='./node_modules' \
 	--exclude='./mysql' \
