@@ -39,23 +39,11 @@ while (have_posts()) : the_post();
             <h1><?php the_title(); ?></h1>
             <?php if ($lead) : ?><p class="model-lead"><?php echo esc_html($lead); ?></p><?php endif; ?>
 
-            <?php if ($specs) :
-                $specs_preview = array_slice($specs, 0, 6);
-                $specs_rest    = array_slice($specs, 6);
-            ?>
-            <div class="spec-table">
-                <?php foreach ($specs_preview as [$label, $value]) : ?>
-                <div class="spec-row">
-                    <span class="spec-label"><?php echo esc_html($label); ?></span>
-                    <span class="spec-value"><?php echo esc_html($value); ?></span>
-                </div>
-                <?php endforeach; ?>
-            </div>
-            <?php if ($specs_rest) : ?>
+            <?php if ($specs) : ?>
             <details class="spec-more">
-                <summary><?php esc_html_e('Full technical specification', 'torresan-bnb'); ?></summary>
+                <summary><?php esc_html_e('Technical specification', 'torresan-bnb'); ?></summary>
                 <div class="spec-table">
-                    <?php foreach ($specs_rest as [$label, $value]) : ?>
+                    <?php foreach ($specs as [$label, $value]) : ?>
                     <div class="spec-row">
                         <span class="spec-label"><?php echo esc_html($label); ?></span>
                         <span class="spec-value"><?php echo esc_html($value); ?></span>
@@ -63,7 +51,6 @@ while (have_posts()) : the_post();
                     <?php endforeach; ?>
                 </div>
             </details>
-            <?php endif; ?>
             <?php endif; ?>
 
             <a class="btn" href="<?php echo torresan_booking_url(); ?>"><?php esc_html_e('Request a Quote', 'torresan-bnb'); ?></a>

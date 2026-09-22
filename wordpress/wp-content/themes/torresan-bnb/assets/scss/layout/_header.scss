@@ -87,7 +87,19 @@
     text-decoration: none;
     flex: none;
 
-    .brand-logo { height: 52px; width: auto; display: block; }
+    .brand-logo {
+        height: 52px;
+        width: auto;
+        display: block;
+
+        // The header bar is pinned dark everywhere the logo's white PNG
+        // reads fine, EXCEPT on phones, where .site-header itself goes
+        // transparent and the logo sits directly on the page — which can be
+        // white in the light theme. Flip it there only.
+        @media (max-width: $bp-mobile) {
+            [data-theme="light"] & { filter: invert(1); }
+        }
+    }
     .brand-text { display: flex; flex-direction: column; line-height: 1; }
 
     .brand-name {
@@ -272,6 +284,13 @@
     .site-nav .menu-list a { font-size: 13px; }
 
     .brand .brand-logo { height: 44px; }
+}
+
+// Stesso problema del logo: .site-header è trasparente su telefono, quindi
+// le barre dell'hamburger (pinnate chiare come tutto il resto dell'header)
+// spariscono sulla pagina bianca del tema chiaro.
+@media (max-width: $bp-mobile) {
+    [data-theme="light"] .menu-toggle .line-menu { background: oklch(20% 0.004 55); }
 }
 
 // Telefono: niente barra e niente nav — solo logo, Instagram e hamburger,

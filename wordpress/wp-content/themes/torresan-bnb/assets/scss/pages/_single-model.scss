@@ -57,9 +57,8 @@
     .model-lead { font-size: 16px; line-height: 1.7; color: $muted-2; margin: 0 0 32px; }
 }
 
-// Compact two-column spec sheet — far shorter than the old wrapped chip grid
-// for models with 20+ fields. The first 6 rows show up front; the rest sit
-// behind a native <details> toggle so the page doesn't run on forever.
+// Compact two-column spec sheet, entirely behind a native <details> toggle
+// so it doesn't compete with the hero on first view.
 .spec-table {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -100,18 +99,23 @@
     summary {
         display: inline-flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
         font-family: $sans;
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 700;
         letter-spacing: 1px;
         text-transform: uppercase;
-        color: $accent-soft;
+        color: $ink;
         cursor: pointer;
-        padding: 10px 0;
+        padding: 14px 20px;
+        border: 1.5px solid $accent-soft;
+        border-radius: 4px;
         list-style: none;
+        transition: background-color $tr-base, color $tr-base;
 
         &::-webkit-details-marker { display: none; }
+
+        &:hover { background: $accent-soft; color: $bg; }
 
         &::after {
             content: "";
@@ -124,7 +128,11 @@
         }
     }
 
+    &[open] summary {
+        background: $accent-soft;
+        color: $bg;
+    }
     &[open] summary::after { transform: rotate(-135deg); }
 
-    .spec-table { margin-top: 8px; }
+    .spec-table { margin-top: 20px; }
 }

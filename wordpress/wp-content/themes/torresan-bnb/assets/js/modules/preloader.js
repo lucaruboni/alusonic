@@ -20,7 +20,7 @@ function initPreloader() {
 
     function render() {
         if (fill)  { fill.style.width = pct + '%'; }
-        if (pctEl) { pctEl.textContent = pct + '%'; }
+        if (pctEl) { pctEl.textContent = Math.round(pct) + '%'; }
     }
 
     var tick = setInterval(function () {

@@ -19,6 +19,7 @@ var initContactForm = require('./modules/contact-form').initContactForm;
 var initLocationMap = require('./modules/location-map').initLocationMap;
 var initTilt        = require('./modules/tilt').initTilt;
 var initModelsFilter = require('./modules/models-filter').initModelsFilter;
+var initGalleryFilter = require('./modules/gallery-filter').initGalleryFilter;
 var initParallaxGallery = require('./modules/parallax-gallery').initParallaxGallery;
 var initArtistModal = require('./modules/artist-modal').initArtistModal;
 var initThemeToggle = require('./modules/theme-toggle').initThemeToggle;
@@ -42,6 +43,7 @@ jQuery(function ($) {
     initLocationMap($);
     initTilt($);
     initModelsFilter($);
+    initGalleryFilter($);
     initParallaxGallery($);
     initArtistModal($);
     initThemeToggle($);

@@ -1,8 +1,8 @@
 <?php
 /**
  * Template Name: Galleria
- * Full photo gallery aggregated from every published model, with
- * scroll+mouse parallax, enter/exit reveal, and fullscreen lightbox.
+ * Every model's photos, grouped model by model with the same line/type
+ * filter bar used on the catalogue — not one long mixed grid.
  */
 
 get_header();
@@ -13,12 +13,38 @@ $subtitle = torresan_field('hero_subtitle', $pid);
 
 $model_ids = alusonic_model_ids();
 
-$photos = [];
+$groups = [];
 foreach ($model_ids as $mid) {
-    $title = get_the_title($mid);
-    foreach (torresan_gallery_ids('model_gallery', $mid) as $img_id) {
-        $photos[] = ['id' => $img_id, 'caption' => $title];
-    }
+    $img_ids = torresan_gallery_ids('model_gallery', $mid);
+    if (! $img_ids) { continue; }
+    $groups[] = [
+        'id'     => $mid,
+        'title'  => get_the_title($mid),
+        'url'    => get_permalink($mid),
+        'type'   => alusonic_model_type($mid),
+        'family' => (string) get_post_meta($mid, 'model_family', true),
+        'images' => $img_ids,
+    ];
+}
+
+// Stesso set di filtri della pagina Modelli, ma solo per le linee/tipi che
+// hanno davvero foto in galleria.
+$cats = [
+    'basso'    => __('Basses', 'torresan-bnb'),
+    'chitarra' => __('Guitars', 'torresan-bnb'),
+];
+$families = [
+    'django'      => __('Django', 'torresan-bnb'),
+    'django-gtsh' => __('Django GTS/H', 'torresan-bnb'),
+    'the-doom'    => __('The Doom', 'torresan-bnb'),
+    'j-special'   => __('J-Special', 'torresan-bnb'),
+    'chitarre'    => __('Guitars', 'torresan-bnb'),
+];
+$present     = [];
+$fam_present = [];
+foreach ($groups as $g) {
+    $present[$g['type']] = true;
+    if ($g['family']) { $fam_present[$g['family']] = true; }
 }
 ?>
 
@@ -34,19 +60,72 @@ foreach ($model_ids as $mid) {
 
     <section class="section-tight">
         <div class="container">
-            <?php if ($photos) : ?>
-            <div class="parallax-gallery" data-lightbox-group="site-gallery">
-                <?php foreach ($photos as $p) :
-                    $thumb = wp_get_attachment_image_url($p['id'], 'section-card');
-                    $full  = wp_get_attachment_image_url($p['id'], 'full');
-                    if (! $thumb) { continue; }
-                ?>
-                <div class="parallax-item" data-lightbox="<?php echo esc_url($full ?: $thumb); ?>">
-                    <img class="parallax-item-media" src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr($p['caption']); ?>" loading="lazy">
-                    <div class="parallax-item-caption"><?php echo esc_html($p['caption']); ?></div>
+            <?php if ($groups) : ?>
+            <div class="models-toolbar">
+                <div class="models-search">
+                    <input type="search" class="models-search-input" placeholder="<?php esc_attr_e('Search for a model…', 'torresan-bnb'); ?>" aria-label="<?php esc_attr_e('Search for a model', 'torresan-bnb'); ?>">
                 </div>
+
+                <button class="filters-toggle" type="button" aria-expanded="false" aria-controls="gallery-filters">
+                    <span><?php esc_html_e('Filters', 'torresan-bnb'); ?></span>
+                    <span class="filters-toggle-count" hidden></span>
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true"><path d="M6 9.5 12 15.5 18 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </button>
+
+                <div class="models-filters" id="gallery-filters">
+                    <?php if (count(array_intersect_key($families, $fam_present)) > 1) : ?>
+                    <div class="filter-group">
+                        <span class="filter-group-label"><?php esc_html_e('Line', 'torresan-bnb'); ?></span>
+                        <div class="filter-bar" data-filter-group="family">
+                            <button class="filter-btn is-active" data-filter="all"><?php esc_html_e('All', 'torresan-bnb'); ?></button>
+                            <?php foreach ($families as $key => $label) : if (empty($fam_present[$key])) continue; ?>
+                                <button class="filter-btn" data-filter="<?php echo esc_attr($key); ?>"><?php echo esc_html($label); ?></button>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+
+                    <?php if (count(array_intersect_key($cats, $present)) > 1) : ?>
+                    <div class="filter-group">
+                        <span class="filter-group-label"><?php esc_html_e('Type', 'torresan-bnb'); ?></span>
+                        <div class="filter-bar" data-filter-group="type">
+                            <button class="filter-btn is-active" data-filter="all"><?php esc_html_e('All', 'torresan-bnb'); ?></button>
+                            <?php foreach ($cats as $key => $label) : if (empty($present[$key])) continue; ?>
+                                <button class="filter-btn" data-filter="<?php echo esc_attr($key); ?>"><?php echo esc_html($label); ?></button>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+
+                    <button class="filters-reset" type="button" hidden><?php esc_html_e('Clear filters', 'torresan-bnb'); ?></button>
+                </div>
+            </div>
+
+            <div class="gallery-groups">
+                <?php foreach ($groups as $g) : ?>
+                <section class="gallery-model-group"
+                    data-family="<?php echo esc_attr($g['family']); ?>"
+                    data-type="<?php echo esc_attr($g['type']); ?>"
+                    data-name="<?php echo esc_attr(mb_strtolower($g['title'])); ?>">
+                    <div class="gallery-model-heading">
+                        <h2><a href="<?php echo esc_url($g['url']); ?>"><?php echo esc_html($g['title']); ?></a></h2>
+                        <a class="gallery-model-link" href="<?php echo esc_url($g['url']); ?>"><?php esc_html_e('View model', 'torresan-bnb'); ?> &rarr;</a>
+                    </div>
+                    <div class="parallax-gallery" data-lightbox-group="gallery-<?php echo esc_attr($g['id']); ?>">
+                        <?php foreach ($g['images'] as $img_id) :
+                            $thumb = wp_get_attachment_image_url($img_id, 'section-card');
+                            $full  = wp_get_attachment_image_url($img_id, 'full');
+                            if (! $thumb) { continue; }
+                        ?>
+                        <div class="parallax-item" data-lightbox="<?php echo esc_url($full ?: $thumb); ?>">
+                            <img class="parallax-item-media" src="<?php echo esc_url($thumb); ?>" alt="<?php echo esc_attr($g['title']); ?>" loading="lazy">
+                        </div>
+                        <?php endforeach; ?>
+                    </div>
+                </section>
                 <?php endforeach; ?>
             </div>
+            <p class="models-empty" hidden><?php esc_html_e('No models match your search.', 'torresan-bnb'); ?></p>
             <?php else : ?>
             <p style="text-align:center;color:var(--muted,#999)"><?php esc_html_e('No photos available at the moment.', 'torresan-bnb'); ?></p>
             <?php endif; ?>

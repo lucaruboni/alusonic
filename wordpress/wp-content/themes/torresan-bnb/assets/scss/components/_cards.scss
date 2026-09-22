@@ -36,7 +36,10 @@
     transition: transform 0.18s ease-out, box-shadow $tr-base;
     box-shadow: 0 24px 44px oklch(0% 0 0 / 0.45);
 }
-.model-card:hover .mc-stage {
+// .is-inview is set by JS on mobile as a card scrolls into view, so touch
+// visitors get the same "activated" look hover gives desktop.
+.model-card:hover .mc-stage,
+.model-card.is-inview .mc-stage {
     box-shadow: 0 40px 70px oklch(0% 0 0 / 0.6);
 }
 
@@ -72,7 +75,8 @@
     transition: opacity $tr-base;
     pointer-events: none;
 }
-.model-card:hover .mc-glow { opacity: 1; }
+.model-card:hover .mc-glow,
+.model-card.is-inview .mc-glow { opacity: 1; }
 
 // Gold frame (mid layer) — thicker, more deliberate border like the reference
 .mc-frame {
@@ -84,7 +88,8 @@
     transform: translateZ(30px);
     transition: transform 0.18s ease-out, border-color $tr-base;
 }
-.model-card:hover .mc-frame { transform: translateZ(45px); }
+.model-card:hover .mc-frame,
+.model-card.is-inview .mc-frame { transform: translateZ(45px); }
 
 // Subject (transparent instrument PNG) — pops forward and breaks the frame
 .mc-subject {
@@ -111,7 +116,8 @@
 .model-card[data-type="chitarra"] .mc-subject img {
     transform: rotate(9deg);
 }
-.model-card:hover .mc-subject {
+.model-card:hover .mc-subject,
+.model-card.is-inview .mc-subject {
     transform: translateZ(90px) scale(1.05) translateY(-3%);
 }
 
@@ -174,15 +180,8 @@
     transform: translateZ(40px) translateY(6px);
     transition: opacity $tr-base, transform $tr-base;
 }
-.model-card:hover .model-card-more { opacity: 1; transform: translateZ(40px) translateY(0); }
-
-// Touch devices: no 3D, keep a clean static layout
-@media (hover: none) {
-    .mc-subject { transform: none; }
-    .mc-frame { transform: none; }
-    .mc-caption { transform: none; }
-    .model-card-more { opacity: 1; transform: none; }
-}
+.model-card:hover .model-card-more,
+.model-card.is-inview .model-card-more { opacity: 1; transform: translateZ(40px) translateY(0); }
 
 // Models page toolbar — category filters + search side by side.
 .models-toolbar {

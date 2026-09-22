@@ -30,22 +30,28 @@
 }
 
 .site-preloader-bar {
-    width: 160px;
-    height: 2px;
-    border-radius: 2px;
-    background: oklch(96% 0.004 55 / 0.15);
+    width: 180px;
+    height: 3px;
+    border-radius: 3px;
+    background: oklch(96% 0.004 55 / 0.12);
     overflow: hidden;
 }
 .site-preloader-fill {
     width: 0%;
     height: 100%;
+    border-radius: inherit;
     background: oklch(70% 0.12 82);
-    transition: width 0.15s linear;
+    box-shadow: 0 0 8px 0 oklch(70% 0.12 82 / 0.7);
+    transition: width 0.25s ease-out;
 }
 .site-preloader-pct {
+    display: inline-block;
+    min-width: 3ch;
     font-family: $sans;
     font-size: 11px;
+    font-variant-numeric: tabular-nums;
     letter-spacing: 2px;
+    text-align: center;
     color: oklch(70% 0.01 55);
 }
 

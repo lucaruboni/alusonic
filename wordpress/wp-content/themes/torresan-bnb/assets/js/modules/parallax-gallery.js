@@ -28,16 +28,16 @@ function initParallaxGallery($) {
         });
     }
 
-    /* ── Horizontal parallax on mouse move (section-wide) ── */
-    var $section = $items.first().closest('.parallax-gallery');
-    if ($section.length) {
-        $section.on('mousemove', function (e) {
+    /* ── Horizontal parallax on mouse move (per gallery section, the page
+       can have one per model group) ── */
+    $('.parallax-gallery').each(function () {
+        $(this).on('mousemove', function (e) {
             var r = this.getBoundingClientRect();
             mx = (e.clientX - r.left) / r.width - 0.5;
             applyScroll();
         });
-        $section.on('mouseleave', function () { mx = 0; applyScroll(); });
-    }
+        $(this).on('mouseleave', function () { mx = 0; applyScroll(); });
+    });
 
     var ticking = false;
     $(window).on('scroll resize', function () {

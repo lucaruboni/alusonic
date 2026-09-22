@@ -13,6 +13,45 @@
     @media (max-width: $bp-mobile) { grid-template-columns: 1fr; }
 }
 
+// Galleria per-modello: intestazione + una griglia .parallax-gallery per
+// ciascun modello, così la pagina si legge come sezioni distinte invece di
+// un unico muro di foto miste.
+.gallery-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+}
+.gallery-model-group { scroll-margin-top: 100px; }
+.gallery-model-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid $border;
+
+    h2 {
+        margin: 0;
+        font-family: $display;
+        font-size: 22px;
+        text-transform: uppercase;
+        letter-spacing: 0.02em;
+
+        a { color: $ink; text-decoration: none; }
+        a:hover { color: $accent-soft; }
+    }
+}
+.gallery-model-link {
+    flex: 0 0 auto;
+    font-family: $sans;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: $accent-soft;
+    white-space: nowrap;
+}
+
 .parallax-item {
     position: relative;
     aspect-ratio: 4 / 5;
